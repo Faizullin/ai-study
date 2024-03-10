@@ -1,0 +1,29 @@
+@import "@/assets/scss/_variables";
+@import "@/assets/scss/_fonts";
+
+.document-item-detail-popup {
+  width: 100%;
+  max-width: 1040px;
+  // height: 361px;
+
+  &__thumbnail {
+    max-width: 526px;
+    height: 361px;
+    border-radius: 5px;
+  }
+  &__title {
+    color: $secondary-color;
+    font-size: 32px;
+    @include font-heading-1;
+    letter-spacing: 0.41px;
+
+    margin-top: 22px;
+    margin-bottom: 24px;
+  }
+  &__description {
+    @include font-pharagraph-1;
+    @include font-letter-spacing-05;
+    line-height: 30px;
+    color: $medium-dark-color;
+  }
+}

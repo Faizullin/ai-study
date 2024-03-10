@@ -1,0 +1,46 @@
+<dashboard-base-list
+  [title]="table_title"
+  [columns]="columns"
+  [actions]="actions"
+>
+  <ng-container upper_content>
+    <div class="row">
+      <div class="col-12 col-sm-4 col-md-2">
+        <button
+          mat-raised-button
+          type="button"
+          matTooltip="Train content-based"
+          [matTooltipPosition]="'above'"
+          class="btn btn-primary"
+          (click)="export_dataset()"
+        >
+          Export dataset
+        </button>
+      </div>
+      <div class="col-12 col-sm-4 col-md-2">
+        <button
+          mat-raised-button
+          type="button"
+          matTooltip="Train collaborative"
+          [matTooltipPosition]="'above'"
+          class="btn btn-primary"
+          (click)="train_cf_model()"
+        >
+          Train collaborative
+        </button>
+      </div>
+      <div class="col-12 col-sm-4 col-md-2">
+        <button
+          mat-raised-button
+          type="button"
+          matTooltip="Train content-based"
+          [matTooltipPosition]="'above'"
+          class="btn btn-primary"
+          (click)="train_cb_model()"
+        >
+          Train content-based
+        </button>
+      </div>
+    </div>
+  </ng-container>
+</dashboard-base-list>

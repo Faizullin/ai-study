@@ -1,0 +1,119 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <h4 class="card-title">{{ title }}</h4>
+            <p class="card-category">{{ description }}</p>
+          </div>
+          <div class="card-body dataSource-container">
+            <ng-container *ngIf="actions?.create && actions?.create?.use">
+              <button
+                *ngIf="actions.create?.use"
+                (click)="onEdit()"
+                mat-raised-button
+                type="button"
+                matTooltip="Create"
+                [matTooltipPosition]="'above'"
+                class="btn btn-success"
+              >
+                Create
+              </button>
+            </ng-container>
+            <ng-content select="[upper_content]"></ng-content>
+
+            <div *ngIf="loading.list" class="dataSource-loading-shade">
+              <mat-spinner></mat-spinner>
+            </div>
+            <div class="table-responsive dataSource-table-container">
+              <table class="table">
+                <thead class="text-primary">
+                  <th
+                    *ngFor="let column of columns"
+                    (click)="onSortChanged(column)"
+                  >
+                    {{ column.header }}
+                  </th>
+                  <th></th>
+                </thead>
+                <tbody>
+                  <tr *ngIf="filters_count > 0">
+                    <td *ngFor="let column of columns">
+                      <ng-container *ngIf="column.filter?.type === 'text'">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Search..."
+                          [formControl]="filterControls[column.field]"
+                        />
+                      </ng-container>
+                      <ng-container *ngIf="column.filter?.type === 'select'">
+                        <select
+                          *ngIf="filterControls[column.field]"
+                          class="form-control"
+                          [formControl]="filterControls[column.field]"
+                        >
+                          <option value="">---</option>
+                          <option
+                            *ngFor="let option of column.filter.fetch.data"
+                            [value]="option.value"
+                          >
+                            {{ option.label }}
+                          </option>
+                        </select>
+                      </ng-container>
+                    </td>
+                  </tr>
+                  <tr *ngFor="let item of data">
+                    <td *ngFor="let column of columns">
+                      <ng-container *ngIf="column.render">
+                        <div [innerHtml]="column.render(item)"></div>
+                      </ng-container>
+                      <ng-container *ngIf="!column.render">
+                        {{ item[column.field] }}
+                      </ng-container>
+                    </td>
+                    <td class="td-actions text-right">
+                      <button
+                        *ngIf="actions?.edit?.use"
+                        (click)="onEdit(item)"
+                        mat-raised-button
+                        type="button"
+                        matTooltip="Edit Task"
+                        [matTooltipPosition]="'above'"
+                        class="btn btn-primary btn-link btn-sm btn-just-icon"
+                      >
+                        <i class="material-icons">edit</i>
+                      </button>
+                      <button
+                        *ngIf="actions?.delete?.use"
+                        (click)="onDelete(item)"
+                        mat-raised-button
+                        type="button"
+                        matTooltip="Remove"
+                        [matTooltipPosition]="'above'"
+                        class="btn btn-danger btn-link btn-sm btn-just-icon"
+                      >
+                        <i class="material-icons">close</i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <mat-paginator
+              [length]="pagination.totalPages"
+              [pageSize]="pagination.pageSize"
+              [(pageIndex)]="pagination.page"
+              [pageSizeOptions]="pagination.pageSizeOptions"
+              (page)="onPageChanged($event)"
+              aria-label="Select page"
+            >
+            </mat-paginator>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

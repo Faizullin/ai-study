@@ -1,0 +1,77 @@
+@mixin font-heading-1 {
+  // Heading 1 //
+  font-weight: 700;
+  font-size: 30px;
+  text-decoration: none;
+  letter-spacing: 0px;
+}
+
+@mixin font-heading-2 {
+  font-weight: 700;
+  font-size: 24px;
+  text-decoration: none;
+  letter-spacing: 0px;
+}
+
+@mixin font-heading-3 {
+  font-weight: 700;
+  font-size: 20px;
+  text-decoration: none;
+  letter-spacing: 0px;
+}
+
+@mixin font-heading-4 {
+  // Heading 4 //
+  font-weight: 700;
+  font-size: 16px;
+  text-decoration: none;
+  letter-spacing: 0px;
+}
+
+@mixin font-pharagraph-1 {
+  // Pharagraph 1 //
+  font-weight: 400;
+  font-size: 18px;
+  text-decoration: none;
+  letter-spacing: 0px;
+}
+
+@mixin font-pharagraph-3 {
+  // Pharagraph 3 //
+  font-weight: 400;
+  font-size: 16px;
+  text-decoration: none;
+  letter-spacing: 0px;
+}
+
+@mixin font-pharagraph-4 {
+  // Pharagraph 4 //
+  font-weight: 400;
+  font-size: 14px;
+  text-decoration: none;
+  letter-spacing: 0px;
+}
+
+@mixin font-pharagraph-5 {
+  // Pharagraph 5 //
+  font-weight: 400;
+  font-size: 12px;
+  text-decoration: none;
+  letter-spacing: 0px;
+}
+
+@mixin font-display-h {
+  // Display H //
+  font-weight: 700;
+  font-size: 36px;
+  text-decoration: none;
+  letter-spacing: 0px;
+}
+
+@mixin font-letter-spacing-03 {
+  letter-spacing: 0.3px;
+}
+
+@mixin font-letter-spacing-05 {
+  letter-spacing: 0.5px;
+}

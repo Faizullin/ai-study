@@ -1,0 +1,38 @@
+<div class="row">
+  <div class="col-6">
+    <input
+      type="file"
+      #fileInput
+      style="display: none"
+      (change)="onFileSelected($event)"
+    />
+    <button
+      class="btn btn-primary"
+      (click)="onFileUploadClick()"
+      [disabled]="files.length >= max_files_count || loading"
+    >
+      Upload
+    </button>
+  </div>
+</div>
+<div class="row">
+  <div *ngFor="let file of files" class="col-lg-3 col-xl-2">
+    <div class="file-man-box">
+      <a href="#" class="file-close" (click)="onFileDeleteClick($event, file)">
+        <i class="fa fa-times-circle"></i>
+      </a>
+      <div class="file-img-box">
+        <img [src]="getFileIconUrl(file)" alt="icon" />
+      </div>
+      <a [href]="file.url" class="file-download"
+        ><i class="fa fa-download"></i
+      ></a>
+      <div class="file-man-title">
+        <h5 class="mb-0 text-overflow">{{ file.name }}</h5>
+        <p class="mb-0">
+          <small>{{ getFileSize(file) }} kb</small>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

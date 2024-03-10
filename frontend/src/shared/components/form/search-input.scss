@@ -1,0 +1,32 @@
+@import "@/assets/scss/_variables";
+@import "@/assets/scss/_fonts";
+
+.search-input {
+  max-width: 400px;
+  height: 48px;
+  border-radius: 4px;
+  background-color: $f9-color;
+  padding-left: 24px;
+  padding-right: 24px;
+
+  a,
+  input {
+    background-color: transparent;
+    color: $medium-dark-color;
+    @include font-pharagraph-4;
+    @include font-letter-spacing-03;
+    line-height: 18px;
+
+    white-space: nowrap;
+    border: none;
+    outline: none;
+    padding: 0;
+  }
+  a {
+    width: 18px;
+  }
+  input {
+    height: 18px;
+    margin-left: 10px;
+  }
+}

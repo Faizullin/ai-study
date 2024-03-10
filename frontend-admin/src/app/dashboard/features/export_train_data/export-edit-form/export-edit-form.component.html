@@ -1,0 +1,87 @@
+<div class="add-title">
+  <h2 class="primary">Train Model Data #{{ editInstance?.id }}</h2>
+</div>
+<mat-dialog-content>
+  <div class="base-edit-form-loader-container">
+    <div *ngIf="loading.list" class="loading-shade">
+      <mat-spinner></mat-spinner>
+    </div>
+    <form>
+      <div class="mb-3 form-group">
+        <label class="form-label" for="train_type">Train Type</label>
+        <input
+          class="form-control"
+          id="train_type"
+          [defaultValue]="editInstance?.train_type"
+          [readOnly]="true"
+        />
+      </div>
+      <div class="mb-3 form-group">
+        <label class="form-label" for="status">Status</label>
+        <input
+          class="form-control"
+          id="status"
+          [defaultValue]="editInstance?.status"
+          [readOnly]="true"
+        />
+      </div>
+      <div class="mb-3 form-group">
+        <label class="form-label" for="description">Description</label>
+        <input
+          class="form-control"
+          id="description"
+          [defaultValue]="editInstance?.description"
+          [readOnly]="true"
+        />
+      </div>
+      <div class="mb-3 form-group">
+        <label class="form-label" for="status">Status</label>
+        <input
+          class="form-control"
+          id="status"
+          [defaultValue]="editInstance?.status"
+          [readOnly]="true"
+        />
+      </div>
+
+      <div class="mb-3 form-group">
+        <label class="form-label" for="train_type">Train Type</label>
+        <input
+          class="form-control"
+          id="train_type"
+          [defaultValue]="editInstance?.train_type"
+          [readOnly]="true"
+        />
+      </div>
+
+      <div class="mb-3 form-group">
+        <ng-conteiner *ngIf="editInstance?.export">
+          <label class="form-label" for="export.file"
+            >Export #{{ editInstance.export?.id }}</label
+          >
+          <input
+            class="form-control"
+            id="export.file"
+            [defaultValue]="editInstance.export?.file"
+            [readOnly]="true"
+          />
+        </ng-conteiner>
+        <ng-conteiner *ngIf="!editInstance?.export">
+          <p>None</p>
+        </ng-conteiner>
+      </div>
+
+      <!-- <button
+          class="btn btn-primary"
+          type="submit"
+          [disabled]="loading.post || loading.detail"
+        >
+          Save
+        </button> -->
+    </form>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="updated">Cancel</button>
+</mat-dialog-actions>

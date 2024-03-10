@@ -1,0 +1,3 @@
+sudo service redis-server start
+celery -A backend.celery worker --pool=solo -l info
+celery -A backend.celery beat --loglevel=info

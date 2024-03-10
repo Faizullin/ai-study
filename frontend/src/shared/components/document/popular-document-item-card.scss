@@ -1,0 +1,39 @@
+@import "@/assets/scss/_variables";
+@import "@/assets/scss/_fonts";
+
+.popular-document-item-card {
+  width: 100%;
+  max-width: 582px;
+  height: 152px;
+  padding: 0;
+  margin-bottom: 24px;
+
+  @media (max-width: get-max-width-breakpoints("md")) {
+    min-height: 152px;
+  }
+
+  &__thumbnail {
+    max-width: 188px;
+    // width: 100%;
+    height: 100%;
+    border-radius: 4px;
+  }
+  &__title {
+    color: $secondary-color;
+    @include font-heading-4;
+    @include font-letter-spacing-03;
+    line-height: 24px;
+  }
+  &__description {
+    color: $medium-dark-color;
+    @include font-pharagraph-5;
+    @include font-letter-spacing-03;
+    line-height: 24px;
+  }
+  &__timestamp {
+    color: $medium-dark-color;
+    @include font-pharagraph-5;
+    @include font-letter-spacing-03;
+    line-height: 24px;
+  }
+}

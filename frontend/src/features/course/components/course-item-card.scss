@@ -1,0 +1,61 @@
+@import "@/assets/scss/_variables";
+@import "@/assets/scss/_fonts";
+
+.course-item-card {
+  max-width: 521px;
+  min-height: 247px;
+  position: relative;
+  margin-bottom: 40px;
+
+  @media (max-width: get-max-width-breakpoints("sm")) {
+    height: 227px;
+  }
+
+  &__thumbnail {
+    max-width: 325px;
+    height: 100%;
+    border-radius: 5px;
+
+    margin-right: 16px;
+  }
+
+  &__title-wrapper {
+    position: absolute;
+    left: 0;
+    top: 13px;
+    width: 86%;
+    height: 50px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+    background-color: $primary-color;
+    opacity: 0.8;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 50px;
+
+    a {
+      color: #fff;
+      @include font-heading-2;
+      line-height: normal;
+
+      @media (max-width: 1023px) {
+      }
+    }
+  }
+
+  &__subject-list {
+    width: 180px;
+    padding-top: 80px;
+  }
+  &__subject-item {
+    color: $medium-dark-color;
+    @include font-pharagraph-4;
+    @include font-letter-spacing-05;
+    line-height: 32px;
+
+    margin-right: 6px;
+  }
+}

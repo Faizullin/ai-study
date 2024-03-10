@@ -1,0 +1,14 @@
+@import "@/assets/scss/_variables";
+@import "@/assets/scss/_fonts";
+
+.home-page {
+  .interesting-works {
+    .interesting-works-grid {
+      margin-top: 55px;
+    }
+  }
+
+  .header-searchbar-input {
+    border-radius: 4px;
+  }
+}

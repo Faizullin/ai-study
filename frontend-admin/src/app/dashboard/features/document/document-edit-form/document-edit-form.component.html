@@ -1,0 +1,149 @@
+<div class="add-title">
+  <h2 class="primary">Document #{{ editInstance?.id }}</h2>
+</div>
+<mat-dialog-content>
+  <div class="base-edit-form-loader-container">
+    <div *ngIf="loading.list" class="loading-shade">
+      <mat-spinner></mat-spinner>
+    </div>
+    <form [formGroup]="form" novalidate (ngSubmit)="onSave()">
+      <div class="form-group mb-3">
+        <label class="form-label" for="title">Title</label>
+        <input
+          class="form-control"
+          id="title"
+          formControlName="title"
+          placeholder="Enter title"
+          type="text"
+        />
+        <div *ngIf="formControl['title'].errors">
+          <div
+            class="invalid-feedback d-block"
+            *ngIf="
+              formControl['title'].errors['required'] &&
+              formControl['title'].touched
+            "
+          >
+            Title is required.
+          </div>
+        </div>
+        <div class="invalid-feedback d-block" *ngIf="validationErrors['title']">
+          {{ validationErrors["title"] }}
+        </div>
+      </div>
+
+      <div class="form-group mb-3">
+        <label class="form-label" for="description">Description</label>
+        <input
+          class="form-control"
+          id="description"
+          formControlName="description"
+          placeholder="Enter description"
+          type="text"
+        />
+        <div
+          class="invalid-feedback d-block"
+          *ngIf="validationErrors['description']"
+        >
+          {{ validationErrors["description"] }}
+        </div>
+      </div>
+
+      <div class="form-group mb-3">
+        <label class="form-label" for="content">Content</label>
+        <ckeditor
+          [editor]="Editor"
+          [config]="EditorConfig"
+          formControlName="content"
+        ></ckeditor>
+        <div
+          class="invalid-feedback d-block"
+          *ngIf="validationErrors['content']"
+        >
+          {{ validationErrors["content"] }}
+        </div>
+      </div>
+
+      <div class="form-group mb-3">
+        <dashboard-filter-select
+          label="Subjects"
+          [filters_data]="filters_data.subjects"
+          [searchable]="true"
+          [multiselect]="true"
+          formControlName="subjects"
+        ></dashboard-filter-select>
+      </div>
+
+      <div class="form-group mb-3">
+        <dashboard-filter-select
+          label="Course"
+          [filters_data]="filters_data.courses"
+          [searchable]="false"
+          [multiselect]="false"
+          formControlName="course"
+        ></dashboard-filter-select>
+      </div>
+
+      <button
+        class="btn btn-primary"
+        type="submit"
+        [disabled]="loading.post || loading.detail"
+      >
+        Save
+      </button>
+    </form>
+  </div>
+
+  <ng-container *ngIf="editInstance">
+    <div class="base-edit-form-loader-container mt-4">
+      <div *ngIf="loading.list" class="loading-shade">
+        <mat-spinner></mat-spinner>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-10 col-sm-8 sol-lg-6">
+          <label class="form-label" for="featured_image">Thumbnail Image</label>
+          <input
+            class="form-control"
+            id="featured_image"
+            placeholder="Upload file"
+            type="file"
+            [disabled]="loading.post || loading.detail"
+            (change)="onFeaturedImageChange($event)"
+          />
+          <div
+            class="invalid-feedback d-block"
+            *ngIf="validationErrors['featured_image']"
+          >
+            {{ validationErrors["featured_image"] }}
+          </div>
+          <div
+            *ngIf="
+              editInstance?.featured_image && editInstance?.featured_image?.url
+            "
+            class=""
+          >
+            <img [src]="editInstance.featured_image.url" alt="" class="w-100" />
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="file">Files list</label>
+        <div class="invalid-feedback d-block" *ngIf="validationErrors['files']">
+          {{ validationErrors["files"] }}
+        </div>
+        <dashboard-file-list
+          [files]="filtered_files"
+          [max_files_count]="1"
+          [loading]="loading.post"
+          (onFileDelete)="onFileDelete($event)"
+          (onFileUpload)="onFileChange($event)"
+        ></dashboard-file-list>
+      </div>
+    </div>
+  </ng-container>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="updated">Cancel</button>
+</mat-dialog-actions>

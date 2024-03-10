@@ -1,0 +1,9 @@
+@import "@/assets/scss/_variables";
+
+.primary-table {
+  thead {
+    height: 40px;
+    background-color: $primary-color;
+    color: white;
+  }
+}

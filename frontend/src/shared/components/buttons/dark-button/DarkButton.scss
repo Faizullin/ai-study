@@ -1,0 +1,12 @@
+@import "@/assets/scss/_variables";
+
+.dark_button {
+  &.primary_btn {
+    text-align: center;
+    padding: 10px 26px;
+    background-color: $black-2e;
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+}

@@ -1,0 +1,60 @@
+<div class="main-content mt-4">
+  <div class="container-fluid">
+      <div class="card login-container mx-auto">
+        <h4 class="card-header">Login</h4>
+        <div class="card-body">
+          <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div *ngIf="validationErrors['detail']" class="mb-3">{{ validationErrors['detail']}}</div>
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input
+                type="text"
+                formControlName="email"
+                class="form-control"
+                [ngClass]="{
+                  'is-invalid': submitted && form.controls.email.errors
+                }"
+              />
+              <div
+                *ngIf="submitted && form.controls.email.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="form.controls.email.errors.required">
+                  Email is required
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <input
+                type="password"
+                formControlName="password"
+                class="form-control"
+                [ngClass]="{
+                  'is-invalid': submitted && form.controls.password.errors
+                }"
+              />
+              <div
+                *ngIf="submitted && form.controls.password.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="form.controls.password.errors.required">
+                  Password is required
+                </div>
+              </div>
+            </div>
+            <div>
+              <button [disabled]="loading.post" class="btn btn-primary">
+                <span
+                  *ngIf="loading.post"
+                  class="spinner-border spinner-border-sm me-1"
+                ></span>
+                Login
+              </button>
+              <a href="/auth/register" class="btn btn-link">Register</a>
+            </div>
+          </form>
+        </div>
+      </div>
+  </div>
+</div>

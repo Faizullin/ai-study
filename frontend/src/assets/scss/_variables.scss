@@ -1,0 +1,45 @@
+$white-normal: #ffffff;
+$green-normal: #00a991;
+$green-light: #e6f6f4;
+$green-normal-active: #008774;
+$green-dark: #007f6d;
+$green-darker: #003b33;
+$black-26: #262626;
+$black-66: #666666;
+$black-2e: #2e4049;
+$black-99: #999999;
+$orange-f2: #f2902f;
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+
+$primary-color: #0193dc;
+$secondary-color: #0c101a;
+$tertiary-color: #3a4e50;
+$navbar-bg-blue: #101524;
+$d4-color: #dfdfdf;
+$medium-dark-color: #919fae;
+$f9fb-color: #F9FBFD;
+$f9-color: #F9F9F9;
+
+$zindex-dropdown: 1000;
+$zindex-sticky: 1020;
+$zindex-fixed: 1030;
+$zindex-modal-backdrop: 1040;
+$zindex-offcanvas: 1050;
+$zindex-modal: 1060;
+$zindex-popover: 1070;
+$zindex-tooltip: 1080;
+$zindex-searchsidebar: 999;
+$zindex-nav-sidebar: 1030;
+
+$container-max-widths: (
+  xs: 575.98px,
+  sm: 767.98px,
+  md: 991.98px,
+  lg: 1199.98px,
+);
+
+@function get-max-width-breakpoints($key) {
+  @return map-get($container-max-widths, $key);
+}

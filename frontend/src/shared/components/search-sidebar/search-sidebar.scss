@@ -1,0 +1,34 @@
+@import "@/assets/scss/_variables";
+@import "@/assets/scss/_fonts";
+
+.search-sidebar-back {
+  $header_height: 100px;
+  visibility: hidden;
+
+  position: absolute;
+  top: $header_height;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: calc(100vh - $header_height);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+
+  background-color: white;
+
+  &.open {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0); // Slide in animation
+    z-index: $zindex-searchsidebar;
+  }
+
+  .search-result-item {
+    cursor: pointer;
+
+    &:hover {
+      color: #fff;
+      background-color: $primary-color;
+    }
+  }
+}

@@ -1,0 +1,7 @@
+[
+  { "url": "api/s/documents/", "file": "dashboard.tables.documents.urls" },
+  { "url": "api/s/subjects/", "file": "dashboard.tables.subjects.urls" },
+  { "url": "api/s/courses/", "file": "dashboard.tables.courses.urls" },
+  { "url": "api/s/users/", "file": "dashboard.tables.users.urls" },
+  { "url": "api/s/mlrec_data/", "file": "dashboard.tables.mlrec_data.urls" }
+]

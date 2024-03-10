@@ -1,0 +1,23 @@
+@import "@/assets/scss/_variables";
+@import "@/assets/scss/_fonts";
+
+.secondary-button {
+  height: 40px;
+  outline: none;
+  border: none;
+  border-radius: 4px;
+
+  background-color: $medium-dark-color;
+  transition: 0.1s;
+
+  color: #ffffff;
+  // padding: 10px 26px;
+  @include font-pharagraph-4;
+  @include font-letter-spacing-03;
+  font-weight: 700;
+
+  &:hover,
+  &:focus {
+    opacity: 0.8;
+  }
+}

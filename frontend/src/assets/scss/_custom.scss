@@ -1,0 +1,56 @@
+@import "./variables";
+
+$colors: (
+  // white-normal: $white-normal,
+  // green-light: $green-light,
+  // green-normal: $green-normal,
+  // green-normal-active: $green-normal-active,
+  // green-dark: $green-dark,
+  // black-26: $black-26,
+  // black-66: $black-66,
+  // green-darker: $green-darker,
+  // orange-f2: $orange-f2,
+  f9fb: $f9fb-color,
+  f9: $f9-color,
+  medium-dark: $medium-dark-color,
+  secondary: $secondary-color,
+  primary: $primary-color,
+);
+
+
+@mixin gen-color-props($prefix, $property) {
+  @each $color-name, $color in $colors {
+    .#{$prefix}-#{$color-name} {
+      #{$property}: $color !important;
+    }
+  }
+}
+
+@include gen-color-props("c-text-color", "color");
+@include gen-color-props("bg", "background");
+@include gen-color-props("border", "border-color");
+
+// Define font family map
+$fontFamilies: (
+  sans-serif: "Arial" sans-serif,
+  serif: "Times New Roman" serif,
+  monospace: "Courier New" monospace,
+  noto: "Noto Sans",
+  poppins: "Poppins",
+  // Add more font families as needed
+);
+
+// Generate text color utility classes
+// @each $colorName, $colorValue in $colors {
+//   #{$prefix}-#{$color-name}
+//   .text-color-#{$colorName} {
+//     color: $colorValue;
+//   }
+// }
+
+// // Generate font family utility classes
+@each $fontFamilyName, $fontFamilyValue in $fontFamilies {
+  .font-#{$fontFamilyName} {
+    font-family: $fontFamilyValue;
+  }
+}
