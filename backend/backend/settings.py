@@ -34,7 +34,6 @@ ALLOWED_HOSTS = ['*']
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -55,6 +54,8 @@ INSTALLED_APPS = [
     'mlrec',
     'dashboard',
     'oauth2_provider',
+    'social_django',
+    'drf_social_oauth2',
     'django_celery_results',
     'django_celery_beat',
 ]
