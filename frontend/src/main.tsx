@@ -13,9 +13,12 @@ import "./index.scss";
 import global from "global";
 import * as process from "process";
 import ModalProvider from "./shared/providers/ModalProvider";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 global.process = process;
 
 const langData = LangConfig.getLangConfig();
+const CLIENT_ID =
+  "608984726176-cmpbo34sp4n5upejl2ueb10luqacpg7l.apps.googleusercontent.com";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -26,10 +29,12 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     >
       <Provider store={store}>
         <React.Suspense fallback={<PagePreloaderLoader active={true} />}>
-          {/* <BootstrapToastsProvider
+          <GoogleOAuthProvider clientId={CLIENT_ID}>
+            {/* <BootstrapToastsProvider
             toastContainerProps={{ position: "top-end", className: "p-2" }}
           > */}
             <RouterProvider router={router}></RouterProvider>
+          </GoogleOAuthProvider>
           {/* </BootstrapToastsProvider> */}
         </React.Suspense>
       </Provider>
