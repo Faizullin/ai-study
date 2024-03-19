@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import Group
 from utils.models import TimestampedModel
+from academics.models import Course
 from datetime import datetime
 
 
@@ -20,6 +21,7 @@ class Profile(models.Model):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, related_name='profile')
     image = models.ImageField(upload_to=user_profile_directory_path, null=True)
+    subscribed_courses = models.ManyToManyField(Course, blank=True,)
 
     def __str__(self):
         return f'{self.user.username} Profile'

@@ -7,7 +7,7 @@ def delete_migrations_folders(root_folder):
     for root, dirs, files in os.walk(root_folder):
         if not (root.startswith('./venv') or root.startswith('.venv')):
             for dir_name in dirs:
-                if dir_name 
+                if dir_name == 'migrations':
                     folder_path = os.path.join(root, dir_name)
                     print(f"Cleaning folder: {folder_path}")
                     # Delete all files in the folder

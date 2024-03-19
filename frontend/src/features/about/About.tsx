@@ -13,6 +13,7 @@ import DocumentService from "@/core/services/DocumentService";
 import TrainExportService from "@/core/services/TrainExportService";
 import { useDebounced } from "@/core/hooks/useDebounced";
 import "./about.scss";
+import InfoBox from "@/shared/components/info-box/InfoBox";
 
 export default function About() {
   const dispatch = useAppDispatch();
@@ -77,19 +78,18 @@ export default function About() {
 
       <section id="about" className="clients about">
         <div className="container">
-          <div className="info-box mx-auto ">
-            <div className="info-box-header">
-              <FormattedMessage id="about_us" defaultMessage="About us" />
-            </div>
-            <div className="info-box-content">
+          <InfoBox
+            className="mx-auto"
+            title={<FormattedMessage id="about_us" defaultMessage="About us" />}
+            content={
               <FormattedMessage
                 id="1fG/hw"
                 defaultMessage="Welcome to our online school dedicated to IoT, Robotics, and
-                  Informatics. We are passionate about fostering innovation and
-                  providing quality education in cutting-edge technologies."
+          Informatics. We are passionate about fostering innovation and
+          providing quality education in cutting-edge technologies."
               />
-            </div>
-          </div>
+            }
+          />
         </div>
       </section>
 

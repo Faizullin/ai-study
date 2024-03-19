@@ -2,6 +2,7 @@
 @import "@/assets/scss/_fonts";
 
 .search-input {
+  position: relative;
   max-width: 400px;
   height: 48px;
   border-radius: 4px;
@@ -9,7 +10,7 @@
   padding-left: 24px;
   padding-right: 24px;
 
-  a,
+  &__submit,
   input {
     background-color: transparent;
     color: $medium-dark-color;
@@ -22,7 +23,7 @@
     outline: none;
     padding: 0;
   }
-  a {
+  &__submit {
     width: 18px;
   }
   input {

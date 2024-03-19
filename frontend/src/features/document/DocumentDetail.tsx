@@ -13,6 +13,8 @@ import "./document-detail.scss";
 import { PopularDocumentItemCard } from "../../shared/components/document/PopularDocumentItemCard";
 import { modalIds, openModal } from "@/core/redux/store/reducers/modalSlice";
 import { fetchMlSearchContentBasedList } from "@/core/redux/store/reducers/mlSearchSlice";
+import CourseItemCard from "@/shared/components/course/CourseItemCard";
+import { ISubject } from "@/core/models/ISubject";
 
 interface IDocumentDetailProps {}
 
@@ -95,7 +97,7 @@ const DocumentDetail: FC<IDocumentDetailProps> = () => {
         <div className="container">
           <div className="row">
             <div className="col-12 col-sm-6">
-              <div className="course-item-card p-0 d-flex justify-content-start">
+              {/* <div className="course-item-card p-0 d-flex justify-content-start">
                 <a
                   href="#"
                   className="course-item-card__thumbnail overflow-hidden"
@@ -130,7 +132,8 @@ const DocumentDetail: FC<IDocumentDetailProps> = () => {
                     ))}
                   </div>
                 </div>
-              </div>
+              </div> */}
+              <CourseItemCard item={document_payload?.course}/>
             </div>
             <div className="col-12 col-sm-6">
               <div>

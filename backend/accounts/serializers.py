@@ -4,6 +4,7 @@ from rest_framework.validators import UniqueValidator
 from utils.serializers import TimestampedSerializer
 from .groups import StudentGroup
 from .models import User, Profile, Group
+from academics.models import Course
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -89,3 +90,9 @@ class ChangePasswordSerializer(serializers.Serializer):
         instance.set_password(validated_data['new_password'])
         instance.save()
         return instance
+
+
+class UserProfileCourseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Course
+        fields = ('id', 'title', 'subject', 'image')

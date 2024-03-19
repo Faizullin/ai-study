@@ -9,6 +9,8 @@ class DocumentPagination(PageNumberPagination):
     page_size = 10
     page_size_query_param = 'page_size'
     max_page_size = 100
+    
+    
 
 
 class DocumentFilter(django_filters_rest.FilterSet):
@@ -21,8 +23,9 @@ class DocumentFilter(django_filters_rest.FilterSet):
         field_name='course__id',
         label='Course id',
     )
-    subjects = django_filters_rest.CharFilter(
-        field_name='subjects__id',
+    subjects = django_filters_rest.ModelMultipleChoiceFilter(
+        field_name='subjects',
+        queryset=Subject.objects.all(),
         label='Subjects ids',
     )
     search = filters.CharFilter(method='filter_by_search')

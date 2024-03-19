@@ -56,11 +56,11 @@ def seed():
     Course.objects.create(
         title="Coures 152",
         image='files/1_YunI3ChUVMlpmFzo75FczQ.png',
-        subject=random.choice(subjects_ids)
+        subject_id=random.choice(subjects_ids)
     )
 
     print("Seed data created successfully.")
 
 
-if __name__ 
+if __name__ == "__main__":
     seed()

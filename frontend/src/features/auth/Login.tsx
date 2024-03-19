@@ -2,6 +2,7 @@ import React from "react";
 import { useAppDispatch, useAppSelector } from "@/core/hooks/redux";
 import {
   fetchUserData,
+  fetchUserSubscribedCourses,
   loginUser,
 } from "@/core/redux/store/reducers/authSlice";
 import PasswordInput from "@/shared/components/form/auth/PasswordInput";
@@ -15,9 +16,9 @@ import useRedirectBack from "@/core/hooks/useRedirectBack";
 import useEffectInitial from "@/core/hooks/useEffectInitial";
 import TitleHelment from "@/shared/components/title/TitleHelmet";
 
-import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
-import Icon from "@mdi/react";
-import { mdiGoogle } from "@mdi/js";
+// import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
+// import Icon from "@mdi/react";
+// import { mdiGoogle } from "@mdi/js";
 
 import "./auth.scss";
 
@@ -32,12 +33,12 @@ export default function Login() {
     email: "",
     password: "",
   });
-  const handleLoginViaGoogleSuccess = useGoogleLogin({
-    onSuccess: (tokenResponse) => {
-      console.log(tokenResponse);
-    },
-    onError: (errorResponse) => {},
-  });
+  // const handleLoginViaGoogleSuccess = useGoogleLogin({
+  //   onSuccess: (tokenResponse) => {
+  //     console.log(tokenResponse);
+  //   },
+  //   onError: (errorResponse) => {},
+  // });
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -52,6 +53,7 @@ export default function Login() {
       if (response.type === loginUser.fulfilled.toString()) {
         dispath(fetchUserData()).then((response) => {
           if (response.type === fetchUserData.fulfilled.toString()) {
+            dispath(fetchUserSubscribedCourses())
             redirect();
           }
         });
@@ -60,7 +62,7 @@ export default function Login() {
   };
   const handleLoginViaGoogle = (event: any) => {
     event?.preventDefault();
-    handleLoginViaGoogleSuccess();
+    // handleLoginViaGoogle();
   };
   useEffectInitial(() => {
     if (isAuthenticated && user) {
@@ -77,20 +79,11 @@ export default function Login() {
       <form className="form-group" onSubmit={handleSubmit}>
         <div className="row">
           <div className="col-12 col-sm-8 col-xl-6">
-            <div className="d-flex justify-content-center">
+            {/* <div className="d-flex justify-content-center">
               <a href="#" onClick={handleLoginViaGoogle}>
                 <Icon path={mdiGoogle} size={1} />
               </a>
-              <GoogleLogin
-                onSuccess={(credentialResponse) => {
-                  console.log(credentialResponse);
-                }}
-                onError={() => {
-                  console.log("Login Failed");
-                }}
-              />
-              ;
-            </div>
+            </div> */}
             <div className="form-group mb-2">
               <InputLabel
                 htmlFor="email"

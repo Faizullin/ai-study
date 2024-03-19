@@ -1,0 +1,52 @@
+@import "@/assets/scss/_variables";
+@import "@/assets/scss/_fonts";
+
+.select-tag-widget {
+  display: block;
+  width: auto;
+  height: 34px;
+  line-height: 34px;
+  border-radius: 17px;
+
+  color: $medium-dark-color;
+  @include font-pharagraph-3;
+  @include font-letter-spacing-03;
+  background-color: transparent;
+  white-space: nowrap;
+
+  padding-left: 17px;
+  padding-right: 17px;
+
+  &.type-primary {
+    border: 1px solid $primary-color;
+
+    &.active {
+      background-color: $primary-color;
+      color: #fff;
+    }
+  }
+  &.type-orange {
+    border: 1px solid $orange-f2-color;
+
+    &.active {
+      background-color: $orange-f2-color;
+      color: #fff;
+    }
+  }
+  &.type-success {
+    border: 1px solid $green-normal-color;
+
+    &.active {
+      background-color: $green-normal-color;
+      color: #fff;
+    }
+  }
+  &.type-secondary {
+    border: 1px solid $medium-dark-color;
+
+    &.active {
+      background-color: $medium-dark-color;
+      color: #fff;
+    }
+  }
+}

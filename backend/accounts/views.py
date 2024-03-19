@@ -5,7 +5,8 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 
-from .serializers import UserRegisterSerializer, UserSerializer, UserProfileSerializer, ChangePasswordSerializer
+from academics.models import Subject, Course
+from .serializers import UserRegisterSerializer, UserSerializer, UserProfileSerializer, ChangePasswordSerializer, UserProfileCourseSerializer
 from .models import User, Profile
 import logging
 
@@ -72,3 +73,12 @@ class UpdateProfileView(generics.RetrieveUpdateDestroyAPIView):
         except Exception as err:
             logger.error(f"UpdateProfileView Error: {err}")
         return Response(UserProfileSerializer(instance, context=self.get_serializer_context()).data, status=status.HTTP_200_OK)
+
+
+class UserProfileCourseListView(generics.ListAPIView):
+    queryset = Course.objects.all()
+    serializer_class = UserProfileCourseSerializer 
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return self.request.user.profile.subscribed_courses.all()

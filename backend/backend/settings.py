@@ -53,9 +53,9 @@ INSTALLED_APPS = [
     'documents',
     'mlrec',
     'dashboard',
-    'oauth2_provider',
-    'social_django',
-    'drf_social_oauth2',
+    # 'oauth2_provider',
+    # 'social_django',
+    # 'drf_social_oauth2',
     'django_celery_results',
     'django_celery_beat',
 ]
@@ -168,7 +168,7 @@ REST_FRAMEWORK = {
     'DATETIME_FORMAT': "%m/%d/%Y %I:%M%P",
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+        # 'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
     ],
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 }
@@ -176,14 +176,16 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
-OAUTH2_PROVIDER = {
-    # this is the list of available scopes
-    'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'}
-}
+# AUTHENTICATION_BACKENDS = [
+#     'django.contrib.auth.backends.ModelBackend',  # Basic email/password
+#     'oauth2_provider.backends.OAuth2Backend',  # Django OAuth Toolkit
+# ]
+# OAUTH2_PROVIDER = {
+#     # this is the list of available scopes
+#     'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'}
+# }
 
 
-CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
-CRISPY_TEMPLATE_PACK = "bootstrap4"
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 CKEDITOR_IMAGE_BACKEND = "pillow"
 CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
@@ -201,6 +203,11 @@ DOMAIN_NAME = os.environ.get('DOMAIN_NAME', None)
 DOMAIN_URL = 'https://' + DOMAIN_NAME if DOMAIN_NAME else 'http://localhost:8000'
 CSRF_TRUSTED_ORIGINS = [DOMAIN_URL,
                         'http://localhost:3000', 'http://localhost:8080']
+if DEBUG:
+    CSRF_TRUSTED_ORIGINS = [DOMAIN_URL,
+                            'http://localhost:3000', 'http://localhost:8080']
+else:
+    CSRF_TRUSTED_ORIGINS = [DOMAIN_URL,]
 
 if os.getenv("EMAIL_HOST_USER"):
     EMAIL_HOST = os.getenv("EMAIL_HOST")
@@ -247,12 +254,6 @@ else:
             }
         }
     }
-    # import redis
-    # r = redis.Redis(
-    #     host='redis-12027.c267.us-east-1-4.ec2.cloud.redislabs.com',
-    #     port=12027,
-    #     password='uxIcNZprJiq1ObMrQO7W0A5cBEOQd0ig'
-    # )
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
@@ -264,7 +265,6 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Asia/Almaty'
-# CELERY_RESULT_BACKEND = 'django-db'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 
 
@@ -291,6 +291,3 @@ CELERY_BEAT_SCHEDULE = {
 }
 
 MODELS_DATA_ROOT = os.path.join(BASE_DIR, 'mlrec\\models_data')
-
-if DEBUG:
-    INSTALLED_APPS += ['django_extensions']

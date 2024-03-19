@@ -11,12 +11,13 @@ from django.utils import timezone
 from .models import Export, TrainType
 from documents.models import Rating, Document, User
 
-from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer, ENGLISH_STOP_WORDS
 from sklearn.metrics.pairwise import linear_kernel
 from surprise import Dataset, Reader, accuracy, SVD, NMF
 from surprise.model_selection import cross_validate, train_test_split, GridSearchCV
 from .models import Status, Export, UserAction, TrainModelData, TrainType, Suggestion
 from django.contrib.contenttypes.models import ContentType
+from accounts.models import User, Profile
 
 logger = get_task_logger(__name__)
 BASE_PATH = settings.MODELS_DATA_ROOT
@@ -57,7 +58,7 @@ def save_cf_pd_dataset(documents: Document):
             prev_dataset = pd.read_csv(last_export_obj.file.name)
             doc_ids_unique = prev_dataset['document_id'].unique()
             user_ids_unique = prev_dataset['user_id'].unique()
-            # if Rating.objects.exclude(user_id__in=user_ids_unique, document_id__in=doc_ids_unique).count() 
+            # if Rating.objects.exclude(user_id__in=user_ids_unique, document_id__in=doc_ids_unique).count()
             #     return
         export_obj = Export.objects.create(
             train_type=TrainType.COLLABORATIVE,
@@ -168,7 +169,8 @@ class CollaborativeFilteringModel:
                 return
         document_ids = Document.objects.order_by('-rating_avg').values_list(
             'id', flat=True)[start_page:start_page+offset]  # implement popular
-        user_ids = User.objects.values_list('id', flat=True)  # dilter receny
+        user_ids = User.objects.values_list('id', flat=True)  # filter recent
+        profiles = self.get_user_profile_with_courses_queryset(user_ids)
         t1 = time.time()
         new_suggestions_data = []
         to_delete_suggestions_ids = []
@@ -194,6 +196,7 @@ class CollaborativeFilteringModel:
                     else:
                         to_delete_suggestions_ids.append(
                             recent_suggestions_vals_ids[index])
+
                 data = {
                     'content_type': ctype,
                     'object_id': user_id,
@@ -209,9 +212,13 @@ class CollaborativeFilteringModel:
         Suggestion.objects.filter(id__in=to_delete_suggestions_ids).delete()
         Suggestion.objects.bulk_create(new_suggestions_data)
 
+    def get_user_profile_with_courses_queryset(self, users_ids):
+        profile = Profile.objects.filter(
+            user_id__in=users_ids).prefetch_related("subscribed_courses").all()
+        return profile
+
 
 class ContentBasedFilteringModel:
-    # CV = 4
     verbose = True
 
     def train_and_batch(self, export_obj: Export):
@@ -231,7 +238,7 @@ class ContentBasedFilteringModel:
             t1 = time.time()
             logger.info(f"start TfidfVectorizer")
 
-            tfidf = TfidfVectorizer(stop_words='english')
+            tfidf = self.get_tfidf()
             tfidf_matrix = tfidf.fit_transform(df['description'])
             cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
 
@@ -306,3 +313,16 @@ class ContentBasedFilteringModel:
         top_similar = sim_scores[1:num_recommend+1]
         doc_indices = [i[0] for i in top_similar]
         return df.iloc[doc_indices]
+
+    def get_tfidf(self):
+        import nltk
+        import string
+        from nltk.corpus import stopwords
+        # nltk.download('stopwords')
+        # nltk.download('punkt')
+        stop_words_kz = set(stopwords.words('kazakh'))
+        stop_words_rus = set(stopwords.words('russian'))
+        my_stop_words = ENGLISH_STOP_WORDS.union(
+            stop_words_kz).union(stop_words_rus)
+        tfidf = TfidfVectorizer(stop_words=list(my_stop_words))
+        return tfidf

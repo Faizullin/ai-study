@@ -36,6 +36,12 @@ class DocumentType(models.TextChoices):
     DOCUMENT = "document", "Document"
 
 
+class DocumentLanguage(models.TextChoices):
+    ENGLISH = "english", "English"
+    RUSSIAN = "russian", "Russian"
+    KAZAKH = "kazakh", "Kazakh"
+
+
 class Document(TimestampedModel):
 
     class Status(models.TextChoices):
@@ -51,6 +57,11 @@ class Document(TimestampedModel):
         max_length=20,
         choices=DocumentType.choices,
         default=DocumentType.DOCUMENT,
+    )
+    language = models.CharField(
+        max_length=20,
+        choices=DocumentLanguage.choices,
+        default=DocumentLanguage.ENGLISH,
     )
     title = models.CharField("Title", max_length=255)
     owner = models.ForeignKey(
@@ -76,4 +87,8 @@ class Rating(TimestampedModel):
     document = models.ForeignKey(
         Document,  null=False, on_delete=models.CASCADE, related_name='ratings')
     value = models.FloatField(default=0.0)
+
+    class Meta:
+        unique_together = (('user', 'document'),)
+
     # actions = models.ManyToManyField(UserAction)

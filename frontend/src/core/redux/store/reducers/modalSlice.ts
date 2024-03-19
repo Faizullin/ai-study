@@ -17,6 +17,7 @@ export const modalIds = {
   searchPopup: "search-sidebar",
   detailModal: "detail-modal",
   documentItemDetailPopup: "document-item-detail-popup",
+  loginRequiredPopup: "login-required-popup",
 };
 
 Object.keys(modalIds).forEach((key) => {

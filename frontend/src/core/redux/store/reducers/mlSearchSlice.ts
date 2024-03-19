@@ -3,15 +3,8 @@ import { AxiosError } from "axios";
 import { ILoadingState } from "@/core/models/ILoadingState";
 import { IDocument } from "@/core/models/IDocument";
 import MLSearchService from "@/core/services/MLSearchService";
-import { ICourse } from "@/core/models/ICourse";
-import { ISubject } from "@/core/models/ISubject";
 import { RootState } from "../store";
-
-interface IFilterData {
-  search: string;
-  course?: ICourse;
-  subjects?: ISubject[];
-}
+import { IDocumentFilterData, getFiltersData } from "./filterSlice";
 
 interface ISearchInitialState {
   documentsContentBased: IDocument[];
@@ -19,7 +12,7 @@ interface ISearchInitialState {
   pagination_data: {
     totalItems: number;
   };
-  filter_data: IFilterData;
+  filter_data: IDocumentFilterData;
   loading: ILoadingState;
   errors: any;
   success: boolean;
@@ -33,6 +26,9 @@ const initialState: ISearchInitialState = {
   },
   filter_data: {
     search: "",
+    course: undefined,
+    subjects: [],
+    subscribed: undefined,
   },
   loading: {
     list: false,
@@ -40,23 +36,6 @@ const initialState: ISearchInitialState = {
   },
   errors: {},
   success: false,
-};
-
-const getFiltersData = (initital_data: IFilterData, additional: any = {}) => {
-  const ddata: any = {};
-  if (initital_data.search) {
-    ddata.search = initital_data.search;
-  }
-  if (initital_data.course) {
-    ddata.course = initital_data.course.id;
-  }
-  if (initital_data.subjects) {
-    ddata.subjects = initital_data.subjects.map((item) => item.id)[0];
-  }
-  return {
-    ...ddata,
-    ...additional,
-  };
 };
 
 export const fetchMlSearchContentBasedList = createAsyncThunk(
@@ -78,7 +57,7 @@ export const fetchMlSearchCollaborativeFilteredList = createAsyncThunk(
   "mlSearchSlice/fetchMlSearchCollaborativeFilteredList",
   async (params: unknown, { rejectWithValue, getState }) => {
     try {
-      const { filter_data } = (getState() as RootState).document;
+      const { filter_data } = (getState() as RootState).mlSearch;
       const response = await MLSearchService.getCollaborativeFilteredML(
         getFiltersData(filter_data, params)
       );
@@ -95,7 +74,11 @@ export const fetchMlSearchCollaborativeFilteredList = createAsyncThunk(
 const mlSearchSlice = createSlice({
   name: "mlSearch",
   initialState,
-  reducers: {},
+  reducers: {
+    setFilterData(state, action) {
+      state.filter_data = { ...action.payload };
+    },
+  },
   extraReducers(builder) {
     builder.addCase(
       fetchMlSearchContentBasedList.fulfilled,
@@ -152,3 +135,4 @@ const mlSearchSlice = createSlice({
 });
 
 export default mlSearchSlice.reducer;
+export const { setFilterData } = mlSearchSlice.actions;

@@ -5,14 +5,15 @@ import { ICourse } from "@/core/models/ICourse";
 import { ISubject } from "@/core/models/ISubject";
 import FilterService from "@/core/services/FilterService";
 
-interface IFilterData {
+export interface IDocumentFilterData {
   search: string;
-  course?: ICourse;
-  subjects?: ISubject[];
+  course: ICourse | null;
+  subjects: ISubject[];
+  subscribed?: boolean;
 }
 
-interface IInitialState {
-  filter_data: IFilterData;
+interface IFilterDataInitialState {
+  filter_data: IDocumentFilterData;
   courses: ICourse[];
   subjects: ISubject[];
   loading: ILoadingState;
@@ -20,9 +21,12 @@ interface IInitialState {
   success: boolean;
 }
 
-const initialState: IInitialState = {
+const initialState: IFilterDataInitialState = {
   filter_data: {
+    course: null,
+    subjects: [],
     search: "",
+    subscribed: undefined,
   },
   courses: [],
   subjects: [],
@@ -34,7 +38,10 @@ const initialState: IInitialState = {
   success: false,
 };
 
-const getFiltersData = (initital_data: IFilterData, additional: any = {}) => {
+export const getFiltersData = (
+  initital_data: IDocumentFilterData,
+  additional: any = {}
+) => {
   const ddata: any = {};
   if (initital_data.search) {
     ddata.search = initital_data.search;
@@ -42,8 +49,11 @@ const getFiltersData = (initital_data: IFilterData, additional: any = {}) => {
   if (initital_data.course) {
     ddata.course = initital_data.course.id;
   }
-  if (initital_data.subjects) {
-    ddata.subjects = initital_data.subjects.map((item) => item.id)[0];
+  if (initital_data.subjects?.length > 0) {
+    ddata.subjects = initital_data.subjects.map((item) => item.id).join(",");
+  }
+  if (initital_data.subscribed !== undefined) {
+    ddata.subscribed = initital_data.subscribed;
   }
   return {
     ...ddata,

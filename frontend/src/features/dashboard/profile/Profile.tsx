@@ -133,7 +133,7 @@ export default function Profile() {
                   <div className="row">
                     <div className="col-md-8 col-sm-6 col-xs-6 profile-header-section1 pull-left">
                       <h1>{authUser.username}</h1>
-                      <h5>Student</h5>
+                      <h5>{authUser.roles.map((item) => item)}</h5>
                     </div>
                     <div className="col-md-4 col-sm-6 col-xs-6 profile-header-section1 text-right pull-rigth">
                       {true && (
@@ -211,7 +211,9 @@ export default function Profile() {
                             <label>Role</label>
                           </div>
                           <div className="col-md-6">
-                            <p>Student</p>
+                            {authUser?.roles.map((item) => (
+                              <p>{item}</p>
+                            ))}
                           </div>
                         </div>
                       </div>

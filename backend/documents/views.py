@@ -51,8 +51,16 @@ class DocumentListView(ListAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        queryset = Document.objects.order_by('-created_at').all()
-        queryset = DocumentFilter(self.request.GET, queryset=queryset).qs
+        queryset = Document.objects.all()
+        use_user_subscribed = self.request.query_params.get("subscribed", None)
+        if use_user_subscribed is not None:
+            user_subscribed_courses = self.request.user.profile.subscribed_courses.all()
+            if use_user_subscribed is False or use_user_subscribed == 'false':
+                queryset = queryset.exclude(course__in=user_subscribed_courses)
+            if use_user_subscribed is True or use_user_subscribed == 'true':
+                queryset = queryset.filter(course__in=user_subscribed_courses)
+        queryset = DocumentFilter(
+            self.request.GET, queryset=queryset).qs.order_by('-created_at')
         return queryset
 
 

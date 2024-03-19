@@ -15,7 +15,7 @@ const SearchInput: FC<ISearchInputProps> = ({
   value,
   onSubmit,
   onFocus,
-}: ISearchInputProps) => {
+}) => {
   const handleChange = (event: any) => {
     onChange(event.target.value);
   };
@@ -30,7 +30,7 @@ const SearchInput: FC<ISearchInputProps> = ({
   };
   return (
     <div className="search-input d-flex justify-content-start align-items-center">
-      <a href="#" onClick={handleSubmit}>
+      <a href="#" onClick={handleSubmit} className="search-input__submit">
         <Icon path={mdiSearchWeb} size={1} />
       </a>
       <input

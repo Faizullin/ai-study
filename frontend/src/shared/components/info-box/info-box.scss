@@ -1,0 +1,42 @@
+@import "@/assets/scss/_variables";
+@import "@/assets/scss/_fonts";
+
+.info-box {
+  width: 100%;
+  max-width: 1000px;
+  border-radius: 5px;
+  border: 1px $d4-color solid;
+
+  &-header {
+    width: 100%;
+    height: 40px;
+    background-color: $primary-color;
+    border-radius: 5px;
+
+    font-size: 24px;
+    letter-spacing: 0.3px;
+    line-height: auto;
+    border-style: hidden;
+    outline: none;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: middle;
+    margin: 0;
+
+    color: #ffffff;
+  }
+  &-content {
+    width: 100%;
+    max-width: 774px;
+    padding: 24px;
+    margin: 0 auto;
+
+    text-align: center;
+    vertical-align: text-top;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    line-height: 24px;
+    border-style: hidden;
+    outline: none;
+  }
+}

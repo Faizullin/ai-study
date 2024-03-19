@@ -5,7 +5,6 @@ import {
   Route,
 } from "react-router-dom";
 import About from "@/features/about/About";
-import ProtectedRoute from "./ProtectedRoute";
 import Login from "../features/auth/Login";
 import Register from "@/features/auth/Register";
 import ForgotPassword from "@/features/auth/ForgotPassword";
@@ -17,6 +16,8 @@ import CourseList from "@/features/course/CourseList";
 import ModalProvider from "@/shared/providers/ModalProvider";
 import { DashboardRouter } from "@/features/dashboard/router";
 import DocumentDetail from "@/features/document/DocumentDetail";
+import ProtectedPopupRoute from "./ProtectedPopupRoute";
+import ProtectedRoute from "./ProtectedRoute";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -34,13 +35,20 @@ const router = createBrowserRouter(
           <Route path="" element={<CourseList />}></Route>
         </Route>
         <Route path="documents">
-          <Route path="" element={<DocumentList />}></Route>
+          <Route
+            path=""
+            element={
+              <ProtectedPopupRoute>
+                <DocumentList />
+              </ProtectedPopupRoute>
+            }
+          ></Route>
           <Route
             path=":id/view"
             element={
-              <ProtectedRoute>
+              <ProtectedPopupRoute>
                 <DocumentDetail />
-              </ProtectedRoute>
+              </ProtectedPopupRoute>
             }
           ></Route>
         </Route>

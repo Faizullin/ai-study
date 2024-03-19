@@ -16,7 +16,7 @@ def init_django(project_name=None):
     # os.chdir(PWD)
     PROJ_MISSING_MSG = "Set an enviroment variable:\n`DJANGO_PROJECT=your_project_name`\nor call:\n`init_django(your_project_name)`"
     project_name = project_name or os.environ.get('DJANGO_PROJECT') or None
-    if project_name 
+    if not project_name:
         raise Exception(PROJ_MISSING_MSG)
     # sys.path.insert(0, os.getenv('PWD'))
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', f'{project_name}.settings')
@@ -91,9 +91,10 @@ def seed():
         for doc in docs:
             rand_index = random.choice(list(range(0, len(subjects))))
             doc.subjects.set(subjects[0:rand_index])
-        print("Document.objects.last().__dict__, filtered_df_cb.iloc[-1],...", Document.objects.last().__dict__, filtered_df_cb.iloc[-1], filtered_df[filtered_df['document_id']
+        print("Document.objects.last().__dict__, filtered_df_cb.iloc[-1],...", Document.objects.last().__dict__, filtered_df_cb.iloc[-1])
               
         data = []
+        filtered_df = filtered_df.drop_duplicates(subset=["user_id", "document_id"])
         for i, value in filtered_df.iterrows():
             data.append(Rating(
                 id=i + 1,
@@ -106,10 +107,10 @@ def seed():
               len(data), data[-1], Rating.objects.all())
         Rating.objects.bulk_create(data)
 
-        from documents.tasks import update_document_ratings
+        from documents.tasks import update_document_ratings_task
         from mlrec.utils import save_cf_pd_dataset, save_cb_pd_dataset
 
-        update_document_ratings()
+        update_document_ratings_task()
         documents = Document.objects.all()
         save_cf_pd_dataset(documents)
         save_cb_pd_dataset(documents)

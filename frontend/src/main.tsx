@@ -13,7 +13,7 @@ import "./index.scss";
 import global from "global";
 import * as process from "process";
 import ModalProvider from "./shared/providers/ModalProvider";
-import { GoogleOAuthProvider } from "@react-oauth/google";
+// import { GoogleOAuthProvider } from "@react-oauth/google";
 global.process = process;
 
 const langData = LangConfig.getLangConfig();
@@ -29,12 +29,12 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     >
       <Provider store={store}>
         <React.Suspense fallback={<PagePreloaderLoader active={true} />}>
-          <GoogleOAuthProvider clientId={CLIENT_ID}>
+          {/* <GoogleOAuthProvider clientId={CLIENT_ID}> */}
             {/* <BootstrapToastsProvider
             toastContainerProps={{ position: "top-end", className: "p-2" }}
           > */}
             <RouterProvider router={router}></RouterProvider>
-          </GoogleOAuthProvider>
+          {/* </GoogleOAuthProvider> */}
           {/* </BootstrapToastsProvider> */}
         </React.Suspense>
       </Provider>

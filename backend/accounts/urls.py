@@ -16,4 +16,5 @@ urlpatterns = [
       path('api/user/', AuthUserView.as_view(), name='user'),
       path('api/password/edit/', ChangePasswordView.as_view(), name='password_update'),
       path('api/profile/edit/', UpdateProfileView.as_view(), name='profile_update'),
+      path('api/profile/courses/', UserProfileCourseListView.as_view(), name='profile-course-list'),
 ]

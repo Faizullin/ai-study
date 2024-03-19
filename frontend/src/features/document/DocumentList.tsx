@@ -1,20 +1,26 @@
-import React, { FC, ReactNode, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/core/hooks/redux";
 import TitleHelment from "@/shared/components/title/TitleHelmet";
 import { Tab, Tabs } from "react-bootstrap";
 import PrimaryPagination from "@/shared/components/pagination/PrimaryPagination";
 import { IDocument } from "@/core/models/IDocument";
 import DocumentItemCard from "./components/DocumentItemCard";
-import { fetchDocumentList } from "@/core/redux/store/reducers/documentSlice";
+import {
+  fetchDocumentList,
+  setFilterData,
+} from "@/core/redux/store/reducers/documentSlice";
 import { modalIds, openModal } from "@/core/redux/store/reducers/modalSlice";
 import {
   fetchMlSearchCollaborativeFilteredList,
-  fetchMlSearchContentBasedList,
+  setFilterData as setFilterDataCb,
 } from "@/core/redux/store/reducers/mlSearchSlice";
-
-import "./document-list.scss";
 import { useLocation } from "react-router-dom";
-import SearchInput from "@/shared/components/form/SearchInput";
+import FiltersView from "./components/FiltersView";
+import {
+  fetchCourseList,
+  fetchSubjectList,
+} from "@/core/redux/store/reducers/filterSlice";
+import "./document-list.scss";
 
 interface ISorting {
   type: "desc" | "asc";
@@ -52,29 +58,44 @@ const tabs: Record<
     title: "Home",
     children: ({ onDetailOpen }) => {
       const dispatch = useAppDispatch();
-      const { documents, pagination_data } = useAppSelector(
+      const { isAuthenticated } = useAppSelector((state) => state.auth);
+      const { documents, pagination_data, filter_data } = useAppSelector(
         (state) => state.document
       );
       const [page, setPage] = useState<number>(1);
 
+      const handleFilterChange = (filters: any) => {
+        dispatch(
+          setFilterData({
+            ...filters,
+          })
+        );
+      };
+
       useEffect(() => {
+        if (!isAuthenticated) {
+          return;
+        }
         dispatch(
           fetchDocumentList({
             page_size: 10,
             page,
           })
         );
-      }, [page]);
-
+      }, [
+        page,
+        filter_data.search,
+        filter_data.course,
+        filter_data.subjects,
+        filter_data.subscribed,
+        isAuthenticated,
+      ]);
       return (
         <>
-          <div className="filters-field">
-            <SearchInput
-              value="ASV"
-              onChange={() => {}}
-              onSubmit={function (): void {
-                throw new Error("Function not implemented.");
-              }}
+          <div className="mb-3">
+            <FiltersView
+              onFilterChange={handleFilterChange}
+              selected_filter_data={filter_data}
             />
           </div>
           <div className="document-grid row">
@@ -108,24 +129,49 @@ const tabs: Record<
     },
   },
   cf: {
-    title: "Cf",
+    title: "Collaborative filtering",
     children: ({ onDetailOpen }) => {
       const dispatch = useAppDispatch();
-      const { documentsCollaborativeFiltered, pagination_data } =
+      const { isAuthenticated } = useAppSelector((state) => state.auth);
+      const { documentsCollaborativeFiltered, pagination_data, filter_data } =
         useAppSelector((state) => state.mlSearch);
       const [page, setPage] = useState<number>(1);
 
+      const handleFilterChange = (filters: any) => {
+        dispatch(
+          setFilterDataCb({
+            ...filters,
+          })
+        );
+      };
+
       useEffect(() => {
+        if (!isAuthenticated) {
+          return;
+        }
         dispatch(
           fetchMlSearchCollaborativeFilteredList({
             page_size: 10,
             page,
           })
         );
-      }, [page]);
+      }, [
+        page,
+        filter_data.search,
+        filter_data.course,
+        filter_data.subjects,
+        filter_data.subscribed,
+        isAuthenticated,
+      ]);
 
       return (
         <>
+          <div className="mb-3">
+            <FiltersView
+              onFilterChange={handleFilterChange}
+              selected_filter_data={filter_data}
+            />
+          </div>
           <div className="document-grid row">
             {documentsCollaborativeFiltered.map((item) => (
               <div
@@ -171,15 +217,9 @@ export default function DocumentList() {
   const [selectedItem, setSelectedItem] = useState<IDocument | null>(null);
   const [isDetailPopupOpen, setIsDetailPopupOpen] = useState<boolean>(false);
 
-  React.useEffect(() => {
-    if (currentLocation.hash) {
-      const element = document.getElementById(
-        currentLocation.hash.substring(1)
-      );
-      if (element) {
-        console.log(element);
-      }
-    }
+  useEffect(() => {
+    dispatch(fetchCourseList({}));
+    dispatch(fetchSubjectList({}));
   }, []);
 
   useEffect(() => {

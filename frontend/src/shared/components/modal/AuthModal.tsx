@@ -1,30 +1,41 @@
 import { useAppDispatch, useAppSelector } from "@/core/hooks/redux";
-import { closeModal } from "@/core/redux/store/reducers/modalSlice";
+import {
+  closeModal,
+  getModalDataById,
+} from "@/core/redux/store/reducers/modalSlice";
 import React from "react";
 import { Alert, Button, Modal } from "react-bootstrap";
 import { FormattedMessage } from "react-intl";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export interface IAuthModalProps {
-  show?: boolean;
-  setShow?: (a: boolean) => void;
-  payload?: any;
+  id: string;
 }
 
-export default function AuthModal(props: IAuthModalProps) {
+export default function AuthModal({ id }: IAuthModalProps) {
+  const dispatch = useAppDispatch();
+  const { modals } = useAppSelector((state) => state.modal);
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const { open } = getModalDataById(modals, id);
   const navigate = useNavigate();
+  const currentLocation = useLocation();
   const handleClose = () => {
-    if (props.setShow !== undefined) {
-      props.setShow(false);
-    }
+    dispatch(
+      closeModal({
+        id,
+      })
+    );
   };
   const handleLoginRedirect = () => {
-    props.setShow(false);
-    navigate("/auth/login");
+    handleClose();
+    navigate({
+      pathname: `/auth/login`,
+      search: `redirect=${currentLocation.pathname}`,
+    });
   };
   return (
-    <Modal show={props.show} onHide={handleClose}>
-      <Modal.Header closeButton>
+    <Modal show={open}>
+      <Modal.Header>
         <Modal.Title>Auth</Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -32,11 +43,6 @@ export default function AuthModal(props: IAuthModalProps) {
           <Alert.Link onClick={handleLoginRedirect}>Login</Alert.Link> requried
         </Alert>
       </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
-          <FormattedMessage id="close" defaultMessage="Close" />
-        </Button>
-      </Modal.Footer>
     </Modal>
   );
 }

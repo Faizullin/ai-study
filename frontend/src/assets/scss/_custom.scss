@@ -15,8 +15,8 @@ $colors: (
   medium-dark: $medium-dark-color,
   secondary: $secondary-color,
   primary: $primary-color,
+  orange-f2: $orange-f2-color
 );
-
 
 @mixin gen-color-props($prefix, $property) {
   @each $color-name, $color in $colors {

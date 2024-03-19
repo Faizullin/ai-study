@@ -24,8 +24,8 @@ const ErrorModalContent = ({
 
 export default function DetailModal({ id }: IDetailModalProps) {
   const dispatch = useAppDispatch();
-  const [title, setTitle] = React.useState<string>("");
   const { modals } = useAppSelector((state) => state.modal);
+  const [title, setTitle] = React.useState<string>("");
   const { props, open } = getModalDataById(modals, id);
   const handleClose = () => {
     dispatch(
