@@ -33,7 +33,7 @@ function PrimaryTable<T>({
 // rowsPerPageOptions,
 ITableProps<T>) {
   return (
-    <table className="primary-table table">
+    <table className="primary-table table overflow-scroll">
       <thead>
         <tr>
           {columns.map((column) => (

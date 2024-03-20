@@ -1,5 +1,5 @@
 @import "@/assets/scss/_variables";
-@import "@/assets/scss/_fonts";
+@import "@/assets/scss/_fonts.scss";
 
 .document-item-detail-popup {
   width: 100%;
@@ -10,6 +10,10 @@
     max-width: 526px;
     height: 361px;
     border-radius: 5px;
+
+    @media (max-width: get-max-width-breakpoints("sm")) {
+      height: 261px;
+    }
   }
   &__title {
     color: $secondary-color;

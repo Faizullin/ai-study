@@ -1,6 +1,6 @@
 import React, { FC } from "react";
-import ArrowRightImg from "@/assets/img/pagination-arrow-right.svg";
 import "./primary-pagination.scss";
+import { Img } from "@/core/constants/img";
 
 interface IPrimaryPaginationProps {
   page: number;
@@ -45,7 +45,7 @@ const PrimaryPagination: FC<IPrimaryPaginationProps> = ({
     <div className="primary-pagination">
       <div className="page-item arrow" onClick={handlePreviousPageButtonClick}>
         <img
-          src={ArrowRightImg}
+          src={Img.pagination_arrow_right}
           className="image-forne"
           style={{
             rotate: "180deg",
@@ -62,7 +62,7 @@ const PrimaryPagination: FC<IPrimaryPaginationProps> = ({
         </div>
       ))}
       <div className="page-item arrow" onClick={handleNextPageButtonClick}>
-        <img src={ArrowRightImg} />
+        <img src={Img.pagination_arrow_right} />
       </div>
     </div>
   );

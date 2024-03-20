@@ -16,7 +16,6 @@ if (default_uri !== undefined) {
 } else {
   TAPI_URL = "/api";
 }
-console.log("using ", TAPI_URL);
 export const API_URL = TAPI_URL;
 
 const $api = axios.create({

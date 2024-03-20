@@ -18,6 +18,7 @@ import { DashboardRouter } from "@/features/dashboard/router";
 import DocumentDetail from "@/features/document/DocumentDetail";
 import ProtectedPopupRoute from "./ProtectedPopupRoute";
 import ProtectedRoute from "./ProtectedRoute";
+import SchemePage from "@/features/scheme/SchemePage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,6 +32,7 @@ const router = createBrowserRouter(
         }
       >
         <Route path="/" element={<About />} />
+        <Route path="scheme" element={<SchemePage />} />
         <Route path="courses">
           <Route path="" element={<CourseList />}></Route>
         </Route>

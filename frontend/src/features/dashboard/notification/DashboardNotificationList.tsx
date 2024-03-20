@@ -71,10 +71,6 @@ const NotificationItem: React.FC<{
   const markAsRead = () => {
     dispatch(fetchNotificationMarkAsRead(notification_item.id)).then(
       (response) => {
-        console.log(
-          response.type,
-          fetchNotificationMarkAsRead.rejected.toString()
-        );
         if (
           response.type === fetchNotificationMarkAsRead.fulfilled.toString()
         ) {

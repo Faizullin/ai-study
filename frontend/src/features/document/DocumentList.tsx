@@ -44,7 +44,7 @@ interface IFilters {
   search: string;
 }
 
-type TTabKeyName = "home" | "cb" | "cf";
+type TTabKeyName = "home" | "cf";
 const tabs: Record<
   TTabKeyName,
   {
@@ -200,12 +200,6 @@ const tabs: Record<
           </div>
         </>
       );
-    },
-  },
-  cb: {
-    title: "Cb",
-    children: () => {
-      return <div></div>;
     },
   },
 };

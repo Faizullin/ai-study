@@ -62,7 +62,7 @@ const CourseItemCard: FC<ICourseItemCardProps> = ({ item }) => {
     <div className="course-item-card p-0 d-flex justify-content-start">
       <a
         href="#"
-        className="course-item-card__thumbnail overflow-hidden"
+        className="course-item-card__thumbnail overflow-hidden w-100"
         onClick={handleOpen}
       >
         <img

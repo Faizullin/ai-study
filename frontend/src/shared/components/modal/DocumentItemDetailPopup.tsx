@@ -7,11 +7,10 @@ import {
   getModalDataById,
 } from "@/core/redux/store/reducers/modalSlice";
 import PrimaryButton from "../buttons/primary-button/PrimaryButton";
-import SecondaryButton from "../buttons/secondary-button/SecondaryButton";
 import { Img } from "@/core/constants/img";
-import "./document_item_detail_popup.scss";
 import { IDocument } from "@/core/models/IDocument";
-import { closeHeaderSearchbar } from "@/core/redux/store/reducers/searchSidebarSlice";
+
+import "./document_item_detail_popup.scss";
 
 interface IDocumentItemDetailPopupProps {
   id: string;
@@ -44,17 +43,6 @@ const DocumentItemDetailPopup: FC<IDocumentItemDetailPopupProps> = ({ id }) => {
       })
     );
   };
-
-  const document_files_count = React.useMemo<number>(() => {
-    if (!document_payload?.files) return 0;
-    if (!document_payload.featured_image)
-      return document_payload.files.length || 0;
-    return (
-      document_payload.files.filter(
-        (fileItem) => fileItem.id !== document_payload.featured_image.id
-      ).length || 0
-    );
-  }, [document_payload]);
 
   return (
     <Modal

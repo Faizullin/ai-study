@@ -73,7 +73,6 @@ export default function Header({ children }: IHeaderProps) {
     }
   };
   const handleSearchbarSubmit = () => {
-    console.log("SHumbit");
   };
 
   const links: ILinkItem[] = [
@@ -83,7 +82,12 @@ export default function Header({ children }: IHeaderProps) {
         defaultMessage: "Home",
       }),
       to: "/",
-      active: true,
+    },{
+      label: intl.formatMessage({
+        id: "scheme",
+        defaultMessage: "Scheme",
+      }),
+      to: "/scheme",
     },
     {
       label: intl.formatMessage({
@@ -104,7 +108,6 @@ export default function Header({ children }: IHeaderProps) {
   const handleToggleMobileNav = () => {
     setIsMobileNavOpen((isMobileNavOpen) => !isMobileNavOpen);
   };
-  const handleMobileDropdownChnage = (data: any) => {};
   const handleLogout = () => {
     dispatch(logout());
   };
@@ -155,7 +158,7 @@ export default function Header({ children }: IHeaderProps) {
   }, [isMobileNavOpen]);
 
   return (
-    <header id="header" className="header shadow-md">
+    <header className="header shadow-md">
       <div className="container h-100 d-flex align-items-center justify-content-between">
         <div className="header-searchbar-wrapper flex-grow-1 me-md-3">
           <HeaderSearch
@@ -258,7 +261,7 @@ export default function Header({ children }: IHeaderProps) {
                     </Link>
                   </li>
                   <li>
-                    <Link to={"/dashboard"}>
+                    <Link to={"/dashboard/profile"}>
                       <FormattedMessage
                         id="dashboard"
                         defaultMessage="Dashboard"
@@ -298,11 +301,6 @@ export default function Header({ children }: IHeaderProps) {
             <Icon
               path={isMobileNavOpen ? mdiClose : mdiMenu}
               size={1.3}
-              className={`${
-                isMobileNavOpen
-                  ? "text-color-orange-f2"
-                  : "text-color-green-normal"
-              }`}
             />
           </a>
         </nav>
