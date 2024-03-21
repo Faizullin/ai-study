@@ -10,7 +10,6 @@ import PrimaryButton from "@/shared/components/buttons/primary-button/PrimaryBut
 import TextInput from "@/shared/components/form/auth/TextInput";
 import TitleHelment from "@/shared/components/title/TitleHelmet";
 
-
 import "./auth.scss";
 
 export default function Register() {
@@ -53,12 +52,14 @@ export default function Register() {
     });
   };
   return (
-    <div className="form-container">
+    <div className="auth-form-container">
       <TitleHelment title={intl.formatMessage({ id: "Register" })} />
-      <h3>Register </h3>
-      <form className="form-group" onSubmit={handleSubmit}>
+      <h3>
+        <FormattedMessage id="register" />{" "}
+      </h3>
+      <form onSubmit={handleSubmit}>
         <div className="row">
-          <div className="col-12 col-sm-8 col-xl-6">
+          <div className="col-12">
             <div className="form-group mb-2">
               <InputLabel
                 htmlFor="username"
@@ -71,7 +72,6 @@ export default function Register() {
                 type="text"
                 name="username"
                 value={data.username}
-                className="form-control"
                 autoComplete="username"
                 isFocused={true}
                 onChange={handleInputChange}
@@ -90,7 +90,6 @@ export default function Register() {
                 type="email"
                 name="email"
                 value={data.email}
-                className="form-control"
                 autoComplete="email"
                 onChange={handleInputChange}
               />
@@ -106,7 +105,6 @@ export default function Register() {
               <PasswordInput
                 name="password"
                 value={data.password}
-                className="form-control"
                 onChange={handleInputChange}
               />
               <InputError message={errors.password} className="mt-2" />
@@ -123,7 +121,6 @@ export default function Register() {
               <PasswordInput
                 name="password_confirmation"
                 value={data.password_confirmation}
-                className="form-control"
                 onChange={handleInputChange}
               />
               <InputError

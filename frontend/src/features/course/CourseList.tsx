@@ -6,6 +6,7 @@ import FilterService from "@/core/services/FilterService";
 import { useAppDispatch, useAppSelector } from "@/core/hooks/redux";
 
 import "./course-list.scss";
+import { FormattedMessage } from "react-intl";
 
 interface ICourseListProps {}
 
@@ -23,7 +24,9 @@ const CourseList: FC<ICourseListProps> = () => {
       <TitleHelment title={"Courses"} />
       <section className="clients bg-white d-flex flex-column flex-grow-1">
         <div className="container d-flex flex-column flex-grow-1">
-          <div className="block-title">Courses</div>
+          <div className="block-title">
+            <FormattedMessage id="courses" />
+          </div>
           <div className="course-grid row mx-auto">
             {courses.map((item) => (
               <div key={item.id} className="col-12 col-md-6">

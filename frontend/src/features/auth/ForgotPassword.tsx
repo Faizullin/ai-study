@@ -32,7 +32,7 @@ export default function ForgotPassword({ status }: IForgotPasswordProps) {
     dispath(forgotUserPassword(data));
   };
   return (
-    <div className="form-container">
+    <div className="auth-form-container">
       <TitleHelment title={"Password reset"} />
       <h3>Forgot Password ? </h3>
       <form className="form-group" onSubmit={handleSubmit}>
@@ -47,7 +47,6 @@ export default function ForgotPassword({ status }: IForgotPasswordProps) {
             type="email"
             name="email"
             value={data.email}
-            className="form-control"
             autoComplete="email"
             isFocused={true}
             onChange={handleInputChange}

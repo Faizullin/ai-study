@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import Icon from "@mdi/react";
 import { mdiSearchWeb } from "@mdi/js";
 import "./search-input.scss";
+import { useIntl } from "react-intl";
 
 interface ISearchInputProps {
   onChange: (value: string) => void;
@@ -16,6 +17,7 @@ const SearchInput: FC<ISearchInputProps> = ({
   onSubmit,
   onFocus,
 }) => {
+  const intl = useIntl();
   const handleChange = (event: any) => {
     onChange(event.target.value);
   };
@@ -36,7 +38,10 @@ const SearchInput: FC<ISearchInputProps> = ({
       <input
         className="search-input__field flex-grow-1"
         type="text"
-        placeholder="Search"
+        placeholder={intl.formatMessage({
+          id: "search",
+          defaultMessage: "Search",
+        })}
         value={value}
         onChange={handleChange}
         onFocus={handleFocus}

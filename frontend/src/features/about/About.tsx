@@ -12,12 +12,11 @@ import { modalIds, openModal } from "@/core/redux/store/reducers/modalSlice";
 import DocumentService from "@/core/services/DocumentService";
 import TrainExportService from "@/core/services/TrainExportService";
 import { useDebounced } from "@/core/hooks/useDebounced";
-import "./about.scss";
 import InfoBox from "@/shared/components/info-box/InfoBox";
+import "./about.scss";
 
 export default function About() {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const currentLocation = useLocation();
   const [popularDocumentsList, setPopularDocumentsList] = React.useState<
     IDocument[]
@@ -84,9 +83,9 @@ export default function About() {
             content={
               <FormattedMessage
                 id="1fG/hw"
-                defaultMessage="Welcome to our online school dedicated to IoT, Robotics, and
-          Informatics. We are passionate about fostering innovation and
-          providing quality education in cutting-edge technologies."
+                defaultMessage="The website could use AI to automatically summarize documents for students, saving them time and effort.
+                We're a team of students passionate about artificial intelligence and its power to revolutionize research. 
+                We use specific recommendation system of AI tools to find similarities and analyses of complex documents, making them easier for students to understand and utilize."
               />
             }
           />
@@ -95,7 +94,9 @@ export default function About() {
 
       <section className="clients accuracy-stats clients bg-f9fb">
         <div className="container">
-          <div className="block-title mx-auto">Train accuracy stats</div>
+          <div className="block-title mx-auto">
+            <FormattedMessage id="Oa8WAE" defaultMessage="Train accuracy stats" />
+          </div>
           <div style={{ height: 40 }}></div>
           <PrimaryTable
             data={trainAccuracyStatsList}
@@ -128,7 +129,9 @@ export default function About() {
       <section className="clients interesting-works">
         <div className="container w-100">
           <div className="d-flex justify-content-start row">
-            <div className="block-title col-2">Agenda</div>
+            <div className="block-title col-2">
+              <FormattedMessage id="S7IK4I" defaultMessage="Agenda" />
+            </div>
             <div className="col-11 col-md-5">
               <HeaderSearch
                 onChange={function (value: string): void {

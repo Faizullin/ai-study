@@ -12,6 +12,7 @@ import {
 import { fetchUserData as fetchUserDataAndSave } from "@/core/redux/store/reducers/authSlice";
 
 import "./profile.scss";
+import { FormattedMessage } from "react-intl";
 
 type TViewMode = "view" | "edit";
 
@@ -143,7 +144,10 @@ export default function Profile() {
                               className="px-5"
                               onClick={handleViewModeChange}
                             >
-                              Edit
+                              <FormattedMessage
+                                id="edit"
+                                defaultMessage="Edit"
+                              />
                             </PrimaryButton>
                           )}
                           {viewMode === "edit" && (
@@ -153,13 +157,19 @@ export default function Profile() {
                                 onClick={handleFormSave}
                                 processing={loading.post}
                               >
-                                Save
+                                <FormattedMessage
+                                  id="save"
+                                  defaultMessage="Save"
+                                />
                               </PrimaryButton>
                               <SecondaryButton
                                 className="px-5"
                                 onClick={handleViewModeChange}
                               >
-                                Cancel
+                                <FormattedMessage
+                                  id="cancel"
+                                  defaultMessage="Cancel"
+                                />
                               </SecondaryButton>
                             </>
                           )}
@@ -211,8 +221,8 @@ export default function Profile() {
                             <label>Role</label>
                           </div>
                           <div className="col-md-6">
-                            {authUser?.roles.map((item) => (
-                              <p>{item}</p>
+                            {authUser?.roles.map((item, index) => (
+                              <p key={index}>{item}</p>
                             ))}
                           </div>
                         </div>

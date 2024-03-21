@@ -1,7 +1,8 @@
 import React, { FC } from "react";
 import { IDocument } from "@/core/models/IDocument";
-import "./document-item-card.scss";
 import { Img } from "@/core/constants/img";
+
+import "./document-item-card.scss";
 
 interface IDocumentItemCardProps {
   item: IDocument;

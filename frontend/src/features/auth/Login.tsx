@@ -71,12 +71,12 @@ export default function Login() {
   }, [isAuthenticated]);
 
   return (
-    <div className="form-container">
+    <div className="auth-form-container">
       <TitleHelment title={intl.formatMessage({ id: "login" })} />
       <h3>
         <FormattedMessage id="login" defaultMessage="Login" />
       </h3>
-      <form className="form-group" onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <div className="row">
           <div className="col-12 col-sm-8 col-xl-6">
             {/* <div className="d-flex justify-content-center">
@@ -96,7 +96,6 @@ export default function Login() {
                 type="email"
                 name="email"
                 value={data.email}
-                className="form-control"
                 autoComplete="email"
                 isFocused={true}
                 onChange={handleInputChange}

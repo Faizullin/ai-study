@@ -11,6 +11,7 @@ import { Img } from "@/core/constants/img";
 import { IDocument } from "@/core/models/IDocument";
 
 import "./document_item_detail_popup.scss";
+import { FormattedMessage } from "react-intl";
 
 interface IDocumentItemDetailPopupProps {
   id: string;
@@ -77,7 +78,7 @@ const DocumentItemDetailPopup: FC<IDocumentItemDetailPopupProps> = ({ id }) => {
           <p className="document-item-detail-popup__description text-wrap">
             {item?.description}
           </p>
-          <PrimaryButton onClick={handleOpen}>More</PrimaryButton>
+          <PrimaryButton onClick={handleOpen}><FormattedMessage id="more" defaultMessage="More"/></PrimaryButton>
           <p className="document-item-detail-popup__description mt-4">
             Rating: {item?.rating_avg?.toPrecision(2)}
           </p>

@@ -67,7 +67,7 @@ class DocumentDetailSerializer(TimestampedSerializer):
 
     class Meta:
         model = Document
-        fields = ('id', 'status', 'type', 'language,'  'title', 'owner', 'featured_image', 'description', 'content',
+        fields = ('id', 'status', 'type', 'language',  'title', 'owner', 'featured_image', 'description', 'content',
                   'files', 'subjects', 'course', 'rating_avg', 'rating_count', 'my_rating_value', 'created_at', 'updated_at')
 
     def get_featured_image(self, obj: Document):

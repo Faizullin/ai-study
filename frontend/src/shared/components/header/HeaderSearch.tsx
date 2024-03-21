@@ -1,5 +1,6 @@
 import React from "react";
 import "./header-search.scss";
+import { useIntl } from "react-intl";
 
 type IHeaderProps = {
   onChange: (value: string) => void;
@@ -13,6 +14,7 @@ export default function HeaderSearch({
   onSubmit,
   onFocus,
 }: IHeaderProps) {
+  const intl = useIntl();
   const handleChange = (event: any) => {
     onChange(event.target.value);
   };
@@ -32,7 +34,7 @@ export default function HeaderSearch({
         className="header-searchbar-input"
         type="text"
         name="searchQueryInput"
-        placeholder="Search"
+        placeholder={intl.formatMessage({ id: "search" })}
         value={value}
         onChange={handleChange}
         onFocus={handleFocus}

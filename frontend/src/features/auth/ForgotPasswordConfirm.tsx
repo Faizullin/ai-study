@@ -47,7 +47,7 @@ const ForgotPasswordConfirm = () => {
     }
   }, [searchParams]);
   return (
-    <div className="form-container">
+    <div className="auth-form-container">
       <TitleHelment title={"Password reset confirm"} />
       <h3>
         <FormattedMessage id="73QGlP" defaultMessage="Confirm new password ?" />
@@ -63,7 +63,6 @@ const ForgotPasswordConfirm = () => {
           <PasswordInput
             name="password"
             value={data.password}
-            className="form-control"
             onChange={handleInputChange}
           />
           <InputError message={errors.password} className="mt-2" />

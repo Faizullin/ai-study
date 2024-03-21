@@ -6,7 +6,7 @@ interface InputLabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
 
 export default function InputLabel(props: InputLabelProps) {
     return (
-        <label htmlFor={`input-id-${props.htmlFor}`} className={`form-label ` + props.className}>
+        <label htmlFor={`input-id-${props.htmlFor}`} className={`form-label ` + props.className ? props.className : ""}>
             { props.value ? props.value : props.children }
         </label>
     );

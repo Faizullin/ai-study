@@ -18,7 +18,7 @@ output_path = os.path.join('.\\src\\lang', output_lang+'.json')
 output_data = dict()
 
 if output_lang == 'normalize':
-    inp_path="lang\\en.json"
+    inp_path=".\\src\\lang\\en.raw.json"
     
 with open(inp_path, 'r') as f:
     inp_data = json.loads(f.read())

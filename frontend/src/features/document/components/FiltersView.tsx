@@ -6,6 +6,7 @@ import { useAppSelector } from "@/core/hooks/redux";
 import { IDocumentFilterData } from "@/core/redux/store/reducers/filterSlice";
 import { useDebounced } from "@/core/hooks/useDebounced";
 import SelectedTagWidget from "@/shared/components/form/SelectTagWidget";
+import { useIntl } from "react-intl";
 
 interface IFiltersViewProps {
   onFilterChange: (filter: IDocumentFilterData) => void;
@@ -16,6 +17,7 @@ const FiltersView: FC<IFiltersViewProps> = ({
   selected_filter_data,
   onFilterChange,
 }) => {
+  const intl = useIntl();
   const { courses, subjects } = useAppSelector((state) => state.filter);
   const { user_subscribed_courses } = useAppSelector((state) => state.auth);
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -188,7 +190,10 @@ const FiltersView: FC<IFiltersViewProps> = ({
         <div className="d-flex justify-content-start align-items-start flex-wrap">
           <div className="me-3 mb-2">
             <SelectedTagWidget
-              title="My subscriptions"
+              title={intl.formatMessage({
+                id: "MNWpkM",
+                defaultMessage: "My subscriptions",
+              })}
               active={selected_filter_data.subscribed}
               onClick={() => handleSelectSubscribedSwitch(true)}
               variant={"success"}
@@ -196,7 +201,10 @@ const FiltersView: FC<IFiltersViewProps> = ({
           </div>
           <div className="me-3 mb-2">
             <SelectedTagWidget
-              title="Not subscribed"
+              title={intl.formatMessage({
+                id: "NrCboF",
+                defaultMessage: "Not subscribed",
+              })}
               active={
                 !selected_filter_data.subscribed &&
                 selected_filter_data.subscribed != undefined

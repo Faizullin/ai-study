@@ -8,13 +8,13 @@ import TitleHelment from "@/shared/components/title/TitleHelmet";
 import { useParams } from "react-router-dom";
 import { Img } from "@/core/constants/img";
 import RatingField from "@/shared/components/document/RatingField";
-
-import "./document-detail.scss";
 import { PopularDocumentItemCard } from "../../shared/components/document/PopularDocumentItemCard";
 import { modalIds, openModal } from "@/core/redux/store/reducers/modalSlice";
 import { fetchMlSearchContentBasedList } from "@/core/redux/store/reducers/mlSearchSlice";
 import CourseItemCard from "@/shared/components/course/CourseItemCard";
-import { ISubject } from "@/core/models/ISubject";
+import { FormattedMessage } from "react-intl";
+
+import "./document-detail.scss";
 
 interface IDocumentDetailProps {}
 
@@ -133,7 +133,7 @@ const DocumentDetail: FC<IDocumentDetailProps> = () => {
                   </div>
                 </div>
               </div> */}
-              <CourseItemCard item={document_payload?.course}/>
+              <CourseItemCard item={document_payload?.course} />
             </div>
             <div className="col-12 col-sm-6">
               <div>
@@ -153,7 +153,9 @@ const DocumentDetail: FC<IDocumentDetailProps> = () => {
                     processing={loading.post}
                   />
                 )}
-                <p>My ratings</p>
+                <p>
+                  <FormattedMessage id="BVe2ss" defaultMessage="My ratings" />
+                </p>
               </div>
             </div>
           </div>
@@ -161,7 +163,9 @@ const DocumentDetail: FC<IDocumentDetailProps> = () => {
       </section>
       <section className="clients bg-f9fb">
         <div className="container">
-          <div className="block-title mx-auto">Similar docs (AI-selected)</div>
+          <div className="block-title mx-auto">
+            <FormattedMessage id="r/NFj3" defaultMessage="Similar docs (AI-selected)" />
+          </div>
           <div className="document-cb-grid row">
             {documentsContentBased.map((item) => (
               <div
