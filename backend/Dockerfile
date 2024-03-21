@@ -12,12 +12,8 @@ RUN apt-get update && \
   gcc \
   default-libmysqlclient-dev \
   pkg-config \
-  curl && \
-  pip install --no-cache-dir -r requirements.txt && \
-  apt-get remove -y \
-  gcc \
-  pkg-config && \
-  rm -rf /var/lib/apt/lists/*
+  curl
+
 
 RUN mkdir /app/static
 RUN mkdir /app/media
@@ -26,7 +22,11 @@ RUN mkdir /app/mlrec/models_data
 
 RUN pip install --upgrade pip
 RUN pip3 install gunicorn
-RUN pip3 install -r requirements.txt
+RUN pip3 install --no-cache-dir -r requirements.txt && \
+  apt-get remove -y \
+  gcc \
+  pkg-config && \
+  rm -rf /var/lib/apt/lists/*
 
 
 COPY ./entrypoint.sh .
