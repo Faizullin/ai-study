@@ -10,7 +10,7 @@ import "./search-sidebar.scss";
 
 export default function SearchSidebar() {
   const dispatch = useAppDispatch();
-  const { isHeaderSearchBarOpen, documents } = useAppSelector(
+  const { isHeaderSearchBarOpen, documents, loading } = useAppSelector(
     (state) => state.searchSidebar
   );
   const [isOpen, setIsOpen] = useState(false);
@@ -41,28 +41,40 @@ export default function SearchSidebar() {
           </div>
           <div className="mt mt-3">
             <ul className="list-group">
-              {documents.map((document) => (
-                <li
-                  key={document.id}
-                  className={`search-result-item list-group-item d-flex justify-content-between ${
-                    false ? "active" : ""
-                  }`}
-                  onClick={async () => {
-                    dispatch(
-                      openModal({
-                        id: modalIds.documentItemDetailPopup,
-                        props: {
-                          item: document,
-                        },
-                        closeOther: true,
-                      })
-                    );
-                  }}
-                >
-                  <p className="p-0 m-0">{document.title}</p>
-                  <p className="p-0 m-0">{document.created_at}</p>
-                </li>
-              ))}
+              {loading.list
+                ? Array(15)
+                    .fill(1)
+                    .map((_, index) => (
+                      <li
+                        key={index}
+                        className="search-result-item list-group-item d-flex justify-content-between"
+                      >
+                        <p className="p-0 m-0 pulse line"></p>
+                        <p className="p-0 m-0 pulse line"></p>
+                      </li>
+                    ))
+                : documents.map((document) => (
+                    <li
+                      key={document.id}
+                      className={`search-result-item list-group-item d-flex justify-content-between ${
+                        false ? "active" : ""
+                      }`}
+                      onClick={async () => {
+                        dispatch(
+                          openModal({
+                            id: modalIds.documentItemDetailPopup,
+                            props: {
+                              item: document,
+                            },
+                            closeOther: true,
+                          })
+                        );
+                      }}
+                    >
+                      <p className="p-0 m-0">{document.title}</p>
+                      <p className="p-0 m-0">{document.created_at}</p>
+                    </li>
+                  ))}
             </ul>
           </div>
         </div>

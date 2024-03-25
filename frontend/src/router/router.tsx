@@ -32,11 +32,11 @@ const router = createBrowserRouter(
         }
       >
         <Route path="/" element={<About />} />
-        <Route path="scheme" element={<SchemePage />} />
+       <Route path="scheme" element={<SchemePage />} />
         <Route path="courses">
           <Route path="" element={<CourseList />}></Route>
         </Route>
-        <Route path="documents">
+         <Route path="documents">
           <Route
             path=""
             element={

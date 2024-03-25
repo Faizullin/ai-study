@@ -21,6 +21,7 @@ import {
   fetchSubjectList,
 } from "@/core/redux/store/reducers/filterSlice";
 import "./document-list.scss";
+import { LoadingDocumentGrid } from "./components/LoadingDocumentItemCard";
 
 interface ISorting {
   type: "desc" | "asc";
@@ -59,9 +60,8 @@ const tabs: Record<
     children: ({ onDetailOpen }) => {
       const dispatch = useAppDispatch();
       const { isAuthenticated } = useAppSelector((state) => state.auth);
-      const { documents, pagination_data, filter_data } = useAppSelector(
-        (state) => state.document
-      );
+      const { documents, pagination_data, filter_data, loading } =
+        useAppSelector((state) => state.document);
       const [page, setPage] = useState<number>(1);
 
       const handleFilterChange = (filters: any) => {
@@ -99,20 +99,24 @@ const tabs: Record<
             />
           </div>
           <div className="document-grid row">
-            {documents.map((item) => (
-              <div
-                key={item.id}
-                className="col-12 col-md-6 d-flex justify-content-center d-md-block"
-              >
-                <DocumentItemCard
+            {loading.list? (
+              <LoadingDocumentGrid count={6} />
+            ) : (
+              documents.map((item) => (
+                <div
                   key={item.id}
-                  item={item}
-                  onOpen={() => {
-                    onDetailOpen(item);
-                  }}
-                />
-              </div>
-            ))}
+                  className="col-12 col-md-6 d-flex justify-content-center d-md-block"
+                >
+                  <DocumentItemCard
+                    key={item.id}
+                    item={item}
+                    onOpen={() => {
+                      onDetailOpen(item);
+                    }}
+                  />
+                </div>
+              ))
+            )}
           </div>
           <div className="document-list__pagination-wrapper d-flex justify-content-center">
             <PrimaryPagination
@@ -133,8 +137,12 @@ const tabs: Record<
     children: ({ onDetailOpen }) => {
       const dispatch = useAppDispatch();
       const { isAuthenticated } = useAppSelector((state) => state.auth);
-      const { documentsCollaborativeFiltered, pagination_data, filter_data } =
-        useAppSelector((state) => state.mlSearch);
+      const {
+        documentsCollaborativeFiltered,
+        pagination_data,
+        filter_data,
+        loading,
+      } = useAppSelector((state) => state.mlSearch);
       const [page, setPage] = useState<number>(1);
 
       const handleFilterChange = (filters: any) => {
@@ -173,20 +181,24 @@ const tabs: Record<
             />
           </div>
           <div className="document-grid row">
-            {documentsCollaborativeFiltered.map((item) => (
-              <div
-                key={item.id}
-                className="col-12 col-md-6 d-flex justify-content-center d-md-block"
-              >
-                <DocumentItemCard
+            {loading.list ? (
+              <LoadingDocumentGrid count={6} />
+            ) : (
+              documentsCollaborativeFiltered.map((item) => (
+                <div
                   key={item.id}
-                  item={item}
-                  onOpen={() => {
-                    onDetailOpen(item);
-                  }}
-                />
-              </div>
-            ))}
+                  className="col-12 col-md-6 d-flex justify-content-center d-md-block"
+                >
+                  <DocumentItemCard
+                    key={item.id}
+                    item={item}
+                    onOpen={() => {
+                      onDetailOpen(item);
+                    }}
+                  />
+                </div>
+              ))
+            )}
           </div>
           <div className="document-list__pagination-wrapper d-flex justify-content-center">
             <PrimaryPagination

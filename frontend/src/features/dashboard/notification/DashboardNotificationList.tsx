@@ -34,10 +34,6 @@ const NotificationItemActionButton: React.FC<{
     }
   };
   const labels = {
-    no_face_id: intl.formatMessage({
-      id: "dashboard.notifications_add_face_id",
-      defaultMessage: "Add face id",
-    }),
     no_subject_group: intl.formatMessage({
       id: "dashboard.notifications_attempt_exam",
       defaultMessage: "Attempt exam",

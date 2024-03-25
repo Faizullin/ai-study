@@ -7,16 +7,24 @@ import { useAppDispatch, useAppSelector } from "@/core/hooks/redux";
 
 import "./course-list.scss";
 import { FormattedMessage } from "react-intl";
+import { LoadingCourseGrid } from "@/shared/components/course/LoadingCourseItemCard";
 
 interface ICourseListProps {}
 
 const CourseList: FC<ICourseListProps> = () => {
+  const [loadingList, setLoadingList] = useState<boolean>(false);
   const [courses, setCourses] = useState<ICourse[]>([]);
 
   useEffect(() => {
-    FilterService.getCourses().then((response) => {
-      setCourses(response.data);
-    });
+    setLoadingList(true);
+    FilterService.getCourses()
+      .then((response) => {
+        setCourses(response.data);
+        setLoadingList(false);
+      })
+      .catch(() => {
+        setLoadingList(false);
+      });
   }, []);
 
   return (
@@ -28,11 +36,15 @@ const CourseList: FC<ICourseListProps> = () => {
             <FormattedMessage id="courses" />
           </div>
           <div className="course-grid row mx-auto">
-            {courses.map((item) => (
-              <div key={item.id} className="col-12 col-md-6">
-                <CourseItemCard item={item} />
-              </div>
-            ))}
+            {loadingList ? (
+              <LoadingCourseGrid count={6} />
+            ) : (
+              courses.map((item) => (
+                <div key={item.id} className="col-12 col-md-6">
+                  <CourseItemCard item={item} />
+                </div>
+              ))
+            )}
           </div>
         </div>
       </section>

@@ -41,7 +41,7 @@ export default function AuthModal({ id }: IAuthModalProps) {
       <Modal.Body>
         <Alert variant="primart">
           <Alert.Link onClick={handleLoginRedirect}>
-            <FormattedMessage defaultMessage="Login requried" />
+            <FormattedMessage id="P8k6M3" defaultMessage="Login requried" />
           </Alert.Link>
         </Alert>
       </Modal.Body>

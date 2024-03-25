@@ -294,4 +294,4 @@ MODELS_DATA_ROOT = os.path.join(BASE_DIR, 'mlrec\\models_data')
 
 
 if DEBUG:
-    DEV_REQUEST_DELAY = 1
+    DEV_REQUEST_DELAY = 3
