@@ -7,12 +7,10 @@ import { RouterProvider } from "react-router-dom";
 import store from "./core/redux/store/store";
 import router from "./router/router";
 import PagePreloaderLoader from "./shared/components/loader/PagePreloader";
-import { ToastsProvider as BootstrapToastsProvider } from "react-bootstrap-toasts";
 import "./index.scss";
 
 import global from "global";
 import * as process from "process";
-import ModalProvider from "./shared/providers/ModalProvider";
 // import { GoogleOAuthProvider } from "@react-oauth/google";
 global.process = process;
 

@@ -27,7 +27,7 @@ export const PopularDocumentItemCard = ({
     onDocumentDetailClick(item);
   };
   return (
-    <div className="popular-document-item-card row mx-auto mx-md-0">
+    <div className="popular-document-item-card row mx-auto mx-md-0" data-aos="fade-right">
       <a
         href="#"
         className="popular-document-item-card__thumbnail col-5 col-md-4 px-0 h-100 overflow-hidden"

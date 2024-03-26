@@ -97,7 +97,7 @@ const DocumentDetail: FC<IDocumentDetailProps> = () => {
           </div>
           <div className="document-files mt-3 mt-sm-5">
             <div className="w-100">
-              {document_payload.files.map((item) => (
+              {document_payload?.files.map((item) => (
                 <div key={item.id} className="">
                   <FileViewer file={item} />
                 </div>

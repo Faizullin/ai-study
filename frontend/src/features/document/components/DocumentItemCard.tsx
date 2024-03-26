@@ -26,7 +26,7 @@ const DocumentItemCard: FC<IDocumentItemCardProps> = ({ item, onOpen }) => {
       ? item.description.substring(0, max_description_truncated_count) + "..."
       : item.description;
   return (
-    <div className="document-item-card d-flex flex-column">
+    <div className="document-item-card d-flex flex-column" data-aos="fade-right">
       <a
         href="#"
         className="document-item-card__thumbnail overflow-hidden"

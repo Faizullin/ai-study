@@ -8,7 +8,7 @@ const LoadingDocumentItemCard: FC<ILoadingDocumentItemCardProps> = () => {
     event?.preventDefault();
   };
   return (
-    <div className="loading-document-item-card d-flex flex-column">
+    <div className="loading-document-item-card d-flex flex-column" data-aos="fade-right">
       <a
         href="#"
         className="loading-document-item-card__thumbnail overflow-hidden"

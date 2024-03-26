@@ -59,7 +59,7 @@ const CourseItemCard: FC<ICourseItemCardProps> = ({ item }) => {
   }, [user_subscribed_courses, item]);
 
   return (
-    <div className="course-item-card p-0 d-flex justify-content-start">
+    <div className="course-item-card p-0 d-flex justify-content-start"data-aos="fade-right">
       <a
         href="#"
         className="course-item-card__thumbnail overflow-hidden w-100"

@@ -8,7 +8,7 @@ const LoadingCourseItemCard: FC<ILoadingCourseItemCardProps> = () => {
     event?.preventDefault();
   };
   return (
-    <div className="loading-course-item-card p-0 d-flex justify-content-start">
+    <div className="loading-course-item-card p-0 d-flex justify-content-start" data-aos="fade-right">
       <a
         href="#"
         className="loading-course-item-card__thumbnail overflow-hidden w-100"

@@ -6,7 +6,10 @@ import HeaderSearch from "@/shared/components/header/HeaderSearch";
 import { IDocument } from "@/core/models/IDocument";
 import PrimaryTable from "@/shared/components/table/PrimaryTable";
 import { ITrainCfModelData } from "@/core/models/ITrainModelData";
-import { PopularDocumentItemCard } from "../../shared/components/document/PopularDocumentItemCard";
+import {
+  LoadingPopularDocumentItemCard,
+  PopularDocumentItemCard,
+} from "../../shared/components/document/PopularDocumentItemCard";
 import { useAppDispatch } from "@/core/hooks/redux";
 import { modalIds, openModal } from "@/core/redux/store/reducers/modalSlice";
 import DocumentService from "@/core/services/DocumentService";
@@ -18,6 +21,7 @@ import "./about.scss";
 export default function About() {
   const dispatch = useAppDispatch();
   const currentLocation = useLocation();
+  const [loadingList, setLoadingList] = useState<boolean>(false);
   const [popularDocumentsList, setPopularDocumentsList] = React.useState<
     IDocument[]
   >([]);
@@ -64,11 +68,17 @@ export default function About() {
   }, []);
 
   React.useEffect(() => {
+    setLoadingList(true);
     DocumentService.getPopularItems({
       search: debouncedSearchTerm,
-    }).then((response) => {
-      setPopularDocumentsList(response.data);
-    });
+    })
+      .then((response) => {
+        setPopularDocumentsList(response.data);
+        setLoadingList(false);
+      })
+      .catch(() => {
+        setLoadingList(false);
+      });
   }, [debouncedSearchTerm]);
 
   return (
@@ -95,7 +105,10 @@ export default function About() {
       <section className="clients accuracy-stats clients bg-f9fb">
         <div className="container">
           <div className="block-title mx-auto">
-            <FormattedMessage id="Oa8WAE" defaultMessage="Train accuracy stats" />
+            <FormattedMessage
+              id="Oa8WAE"
+              defaultMessage="Train accuracy stats"
+            />
           </div>
           <div style={{ height: 40 }}></div>
           <PrimaryTable
@@ -146,13 +159,19 @@ export default function About() {
           </div>
           <div className="row w-100 interesting-works-grid mx-auto">
             <div className="col-12 col-md-11 col-lg-7 px-0">
-              {popularDocumentsList.map((document_item) => (
-                <PopularDocumentItemCard
-                  key={document_item.id}
-                  item={document_item}
-                  onDocumentDetailClick={onDocumentDetailClick}
-                />
-              ))}
+              {loadingList
+                ? Array(6)
+                    .fill(1)
+                    .map((_, index) => (
+                      <LoadingPopularDocumentItemCard key={index} />
+                    ))
+                : popularDocumentsList.map((document_item) => (
+                    <PopularDocumentItemCard
+                      key={document_item.id}
+                      item={document_item}
+                      onDocumentDetailClick={onDocumentDetailClick}
+                    />
+                  ))}
             </div>
             <div className="col-5"></div>
           </div>
