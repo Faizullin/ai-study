@@ -22,7 +22,7 @@ export const PopularDocumentItemCard = ({
     item.description.length > max_description_truncated_count
       ? item.description.substring(0, max_description_truncated_count) + "..."
       : item.description;
-  const handleOpen = (evemt: any, item: IDocument) => {
+  const handleOpen = (event: any) => {
     event?.preventDefault();
     onDocumentDetailClick(item);
   };
@@ -31,7 +31,7 @@ export const PopularDocumentItemCard = ({
       <a
         href="#"
         className="popular-document-item-card__thumbnail col-5 col-md-4 px-0 h-100 overflow-hidden"
-        onClick={(e) => handleOpen(e, item)}
+        onClick={handleOpen}
       >
         <img
           src={item.featured_image?.url || Img.not_found}
@@ -50,7 +50,40 @@ export const PopularDocumentItemCard = ({
           </p>
           <button
             className="btn bg-transparent"
-            onClick={(e) => handleOpen(e, item)}
+            onClick={handleOpen}
+          >
+            <Icon path={mdiArrowRight} size={1} />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const LoadingPopularDocumentItemCard = () => {
+  const handleOpen = (event: any,) => {
+    event?.preventDefault();
+  };
+  return (
+    <div className="popular-document-item-card row mx-auto mx-md-0">
+      <a
+        href="#"
+        className="popular-document-item-card__thumbnail col-5 col-md-4 px-0 h-100 overflow-hidden"
+        onClick={handleOpen}
+      >
+        <div className="object-fit-cover w-100 h-100 pulse thumb"></div>
+      </a>
+      <div className="col-7 col-md-8 h-100 ps-md-4">
+        <p className="popular-document-item-card__title pulse line"></p>
+        <p className="popular-document-item-card__description d-none d-md-block pulse line">
+        </p>
+        <div className="d-flex justify-content-between">
+          <p className="popular-document-item-card__timestamp pulse line">
+            
+          </p>
+          <button
+            className="btn bg-transparent"
+            onClick={handleOpen}
           >
             <Icon path={mdiArrowRight} size={1} />
           </button>

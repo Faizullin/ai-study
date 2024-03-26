@@ -8,13 +8,17 @@ import TitleHelment from "@/shared/components/title/TitleHelmet";
 import { useParams } from "react-router-dom";
 import { Img } from "@/core/constants/img";
 import RatingField from "@/shared/components/document/RatingField";
-import { PopularDocumentItemCard } from "../../shared/components/document/PopularDocumentItemCard";
+import {
+  LoadingPopularDocumentItemCard,
+  PopularDocumentItemCard,
+} from "../../shared/components/document/PopularDocumentItemCard";
 import { modalIds, openModal } from "@/core/redux/store/reducers/modalSlice";
 import { fetchMlSearchContentBasedList } from "@/core/redux/store/reducers/mlSearchSlice";
 import CourseItemCard from "@/shared/components/course/CourseItemCard";
 import { FormattedMessage } from "react-intl";
 
 import "./document-detail.scss";
+import FileViewer from "@/shared/components/document/FileViewer";
 
 interface IDocumentDetailProps {}
 
@@ -91,6 +95,15 @@ const DocumentDetail: FC<IDocumentDetailProps> = () => {
               ></div>
             </div>
           </div>
+          <div className="document-files mt-3 mt-sm-5">
+            <div className="w-100">
+              {document_payload.files.map((item) => (
+                <div key={item.id} className="">
+                  <FileViewer file={item} />
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
       <section className="clients bg-white">
@@ -164,31 +177,45 @@ const DocumentDetail: FC<IDocumentDetailProps> = () => {
       <section className="clients bg-f9fb">
         <div className="container">
           <div className="block-title mx-auto">
-            <FormattedMessage id="r/NFj3" defaultMessage="Similar docs (AI-selected)" />
+            <FormattedMessage
+              id="r/NFj3"
+              defaultMessage="Similar docs (AI-selected)"
+            />
           </div>
           <div className="document-cb-grid row">
-            {documentsContentBased.map((item) => (
-              <div
-                key={item.id}
-                className="col-12 col-md-6 d-flex justify-content-center d-md-block"
-              >
-                <PopularDocumentItemCard
-                  key={item.id}
-                  item={item}
-                  onDocumentDetailClick={() => {
-                    dispatch(
-                      openModal({
-                        id: modalIds.documentItemDetailPopup,
-                        closeOther: true,
-                        props: {
-                          item,
-                        },
-                      })
-                    );
-                  }}
-                />
-              </div>
-            ))}
+            {mlLoading.list
+              ? Array(6)
+                  .fill(1)
+                  .map((_, index) => (
+                    <div
+                      key={index}
+                      className="col-12 col-md-6 d-flex justify-content-center d-md-block"
+                    >
+                      <LoadingPopularDocumentItemCard />{" "}
+                    </div>
+                  ))
+              : documentsContentBased.map((item) => (
+                  <div
+                    key={item.id}
+                    className="col-12 col-md-6 d-flex justify-content-center d-md-block"
+                  >
+                    <PopularDocumentItemCard
+                      key={item.id}
+                      item={item}
+                      onDocumentDetailClick={() => {
+                        dispatch(
+                          openModal({
+                            id: modalIds.documentItemDetailPopup,
+                            closeOther: true,
+                            props: {
+                              item,
+                            },
+                          })
+                        );
+                      }}
+                    />
+                  </div>
+                ))}
           </div>
         </div>
       </section>
