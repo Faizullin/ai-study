@@ -1,0 +1,9 @@
+from django.apps import AppConfig
+
+
+class ArticlesConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'apps.documents'
+
+    def ready(self) -> None:
+        import apps.documents.signals

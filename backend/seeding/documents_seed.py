@@ -1,15 +1,16 @@
 # %%
-from mlrec.utils import *
-from mlrec.tasks import *
-from django.contrib.auth.hashers import make_password
-from mlrec.models import *
-from accounts.models import *
-from documents.models import *
 import os
+import random
 import sys
+
 import django
 import pandas as pd
-import random
+from apps.documents.models import *
+from apps.mlrec.models import *
+from apps.mlrec.tasks import *
+from apps.mlrec.utils import *
+from django.contrib.auth.hashers import make_password
+UserModel = get_user_model()
 
 
 def init_django(project_name=None):
@@ -47,7 +48,7 @@ def seed():
 
         documents_ids = df_cf['document_id'].unique()
         tmp_df_cf = df_cf.copy().sort_values(by='document_id')[
-            0:(df_cb['show_id'].size * 3)]
+            0:(df_cb['id'].size * 3)]
 
         print("tmp_df_cf, df_cf", tmp_df_cf, df_cf)
         user_ids = tmp_df_cf['user_id'].unique()
@@ -55,7 +56,7 @@ def seed():
         data = []
         for i in range(0, user_ids.size):
             idd = user_ids[i]
-            data.append(User(
+            data.append(UserModel(
                 id=idd,
                 username=f"user{idd}",
                 email=f"user{idd}@example.com",
@@ -63,8 +64,10 @@ def seed():
             ))
             if i > 100:
                 break
-        User.objects.bulk_create(data)
-        user_ids = User.objects.order_by('id').values_list('id', flat=True)
+        existing_users = UserModel.objects.filter(id__in=[i.id for i in data])
+        existing_users_ids = [i.id for i in existing_users]
+        UserModel.objects.bulk_create([i for i in data if i not in existing_users_ids])
+        user_ids = UserModel.objects.order_by('id').values_list('id', flat=True)
         df_cb['id'] = df_cb.index + 1
         filtered_df = df_cf[df_cf['user_id'].isin(user_ids)]
         filtered_df = filtered_df[filtered_df['document_id'].isin(df_cb['id'])]
@@ -76,7 +79,7 @@ def seed():
         # filtered_df_cb['id'].min(), filtered_df_cb['id'].max()
         # df_cf[df_cf['document_id'].isin(filtered_df_cb['id'])]['document_id'].nunique()
         data = []
-        admin_user = User.objects.first()
+        admin_user = UserModel.objects.first()
         course = Course.objects.last()
         subjects = Subject.objects.all()
         for i, value in filtered_df_cb.iterrows():
@@ -91,10 +94,12 @@ def seed():
         for doc in docs:
             rand_index = random.choice(list(range(0, len(subjects))))
             doc.subjects.set(subjects[0:rand_index])
-        print("Document.objects.last().__dict__, filtered_df_cb.iloc[-1],...", Document.objects.last().__dict__, filtered_df_cb.iloc[-1])
-              
+        print("Document.objects.last().__dict__, filtered_df_cb.iloc[-1],...", Document.objects.last(
+        ).__dict__, filtered_df_cb.iloc[-1])
+
         data = []
-        filtered_df = filtered_df.drop_duplicates(subset=["user_id", "document_id"])
+        filtered_df = filtered_df.drop_duplicates(
+            subset=["user_id", "document_id"])
         for i, value in filtered_df.iterrows():
             data.append(Rating(
                 id=i + 1,
@@ -107,8 +112,8 @@ def seed():
               len(data), data[-1], Rating.objects.all())
         Rating.objects.bulk_create(data)
 
-        from documents.tasks import update_document_ratings_task
-        from mlrec.utils import save_cf_pd_dataset, save_cb_pd_dataset
+        from apps.documents.tasks import update_document_ratings_task
+        from apps.mlrec.utils import save_cb_pd_dataset, save_cf_pd_dataset
 
         update_document_ratings_task()
         documents = Document.objects.all()
@@ -133,7 +138,7 @@ def seed():
         if ret:
             document_ids = Document.objects.order_by('-rating_avg').values_list(
                 'id', flat=True)[start_page:start_page+offset]  # implement popular
-            user_ids = User.objects.order_by(
+            user_ids = UserModel.objects.order_by(
                 '-id').values_list('id', flat=True)[0:10]  # dilter receny
             new_suggestions_data = []
             print(user_ids, document_ids, [

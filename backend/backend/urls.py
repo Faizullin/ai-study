@@ -14,26 +14,28 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.shortcuts import render, redirect
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include, re_path
-from django.conf.urls.static import static
-from django.conf import settings
-from django.views.static import serve
 
 urlpatterns = [
     path('dd/admin/', admin.site.urls),
-    path('', include('academics.urls')),
-    path('', include('accounts.urls')),
-    path('', include('documents.urls')),
-    path('', include('mlrec.urls')),
-    path('', include('dashboard.urls')),
+    path('', include('apps.admin_dashboard.urls', namespace='admin_dashboard')),
+    path('', include('apps.academics.urls', namespace='academics')),
+    path('', include('apps.accounts.urls', namespace='accounts')),
+    path('', include('apps.documents.urls', namespace='documents')),
+    path('', include('apps.mlrec.urls', namespace='mlrec')),
     re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),
 
 ]
 
 if settings.DEBUG:
+    urlpatterns += [
+        path('__debug__/', include('debug_toolbar.urls')),
+    ]
     urlpatterns += static(settings.STATIC_URL,
                           document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)
+                          

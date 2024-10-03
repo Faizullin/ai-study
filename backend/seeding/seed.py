@@ -1,22 +1,25 @@
-import random
 import json
 import os
-from django.db.models import QuerySet
-from accounts.models import User
+import random
+
+from apps.academics.models import Course, Subject
+from apps.accounts.groups import AdminGroup, DeveloperGroup, StaffGroup
+from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
-from academics.models import Course, Subject
-from accounts.groups import AdminGroup, StaffGroup, StudentGroup, DeveloperGroup
+
+UserModel = get_user_model()
 
 
-def seed():
+def seed(use_allauth):
+    # academic_config = Academi
     groupAdmin = Group.objects.create(
         name=AdminGroup.name,
         id=AdminGroup.id,
     )
-    groupStudent = Group.objects.create(
-        name=StudentGroup.name,
-        id=StudentGroup.id,
-    )
+    # groupStudent = Group.objects.create(
+    #     name=StudentGroup.name,
+    #     id=StudentGroup.id,
+    # )
     grouDeveloper = Group.objects.create(
         name=DeveloperGroup.name,
         id=DeveloperGroup.id,
@@ -25,7 +28,7 @@ def seed():
         name=StaffGroup.name,
         id=StaffGroup.id,
     )
-    user1 = User.objects.create_user(
+    user1 = UserModel.objects.create_user(
         username="admin",
         email="admin@example.com",
         is_staff=True,
@@ -33,13 +36,13 @@ def seed():
         password="admin.password@1234"
     )
     user1.groups.set([grouDeveloper])
-    user2 = User.objects.create_user(
+    user2 = UserModel.objects.create_user(
         username="user1",
         email="user1@example.com",
         password="user1.password@1234"
     )
     user2.groups.set([grouDeveloper])
-    user3 = User.objects.create_user(
+    user3 = UserModel.objects.create_user(
         username="user2",
         email="user2@example.com",
         password="user2.password@1234"
