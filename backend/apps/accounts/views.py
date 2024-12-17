@@ -1,6 +1,3 @@
-from apps.academics.models import Course
-from apps.accounts.permissions import permissions
-from apps.accounts.serializers import UserProfileCourseSerializer
 from dj_rest_auth.jwt_auth import get_refresh_view
 from dj_rest_auth.registration.views import RegisterView as _BaseRegisterView
 from dj_rest_auth.registration.views import \
@@ -8,7 +5,12 @@ from dj_rest_auth.registration.views import \
 from dj_rest_auth.utils import jwt_encode
 from dj_rest_auth.views import LoginView as _BaseLoginView
 from dj_rest_auth.views import PasswordResetView as _BasePasswordResetView
+from dj_rest_auth.views import UserDetailsView as _BaseUserDetailsView
 from rest_framework import generics
+
+from apps.academics.models import Course
+from .permissions import permissions
+from .serializers import UserProfileCourseSerializer, UserDetailSerializer
 
 
 class LoginView(_BaseLoginView):
@@ -40,3 +42,8 @@ class UserProfileCourseListView(generics.ListAPIView):
 
     def get_queryset(self):
         return self.request.user.profile.subscribed_courses.all()
+
+
+class UserDetailsView(_BaseUserDetailsView):
+    serializer_class = UserDetailSerializer
+    permission_classes = (permissions.IsAuthenticated,)

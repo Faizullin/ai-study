@@ -1,4 +1,5 @@
 import json
+import logging
 import pickle
 import time
 from pathlib import Path
@@ -21,7 +22,8 @@ from .models import Status, Export, TrainModelData, TrainType, Suggestion
 
 UserModel = get_user_model()
 
-logger = get_task_logger(__name__)
+# logger = get_task_logger(__name__)
+logger = logging.getLogger(__name__)
 
 BASE_PATH = settings.MODELS_DATA_ROOT
 
@@ -73,7 +75,7 @@ def save_cf_pd_dataset(documents: Document):
         export_obj.save()
         return True, export_obj
     except Exception as error:
-        logger.error(f"Error {error}")
+        logger.error(f"Error (save_cf_pd_dataset) {error}")
         return False, None
 
 
@@ -97,7 +99,7 @@ def save_cb_pd_dataset(documents):
         export_obj.save()
         return True, export_obj
     except Exception as error:
-        logger.error(f"Error {error}")
+        logger.error(f"Error (save_cb_pd_dataset) {error}")
         return False, None
 
 

@@ -6,18 +6,18 @@ import { IForgotPasswordConfirmProps, IForgotPasswordProps } from "../models/IAu
 
 export default class AuthService{
     static async login(data:ILoginProps): Promise<AxiosResponse<AuthResponse>> {
-        return $api.post<AuthResponse>('/login/',{...data})
+        return $api.post<AuthResponse>('/auth/login/token/',{...data})
     }
     static async register(data:IRegisterProps): Promise<AxiosResponse<AuthResponse>> {
-        return $api.post<AuthResponse>('/register/',{...data})
+        return $api.post<AuthResponse>('/auth/register/',{...data})
     }
     static async logout(): Promise<AxiosResponse<any>> {
-        return $api.post('/logout/')
+        return $api.post('/auth/logout/')
     }
     static async forgotUserPassword(data: IForgotPasswordProps): Promise<AxiosResponse<any>> {
-        return $api.post<AuthResponse>('/password_reset/',{...data})
+        return $api.post<AuthResponse>('/auth/password_reset/',{...data})
     }
     static async forgotUserPasswordConfirm(data: IForgotPasswordConfirmProps): Promise<AxiosResponse<any>> {
-        return $api.post<AuthResponse>('/password_reset/confirm/',{...data})
+        return $api.post<AuthResponse>('/auth/password_reset/confirm/',{...data})
     }
 }

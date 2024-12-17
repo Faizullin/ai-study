@@ -19,10 +19,10 @@ export interface IRegisterProps {
 
 export default class UserService {
   static async fetchUser(): Promise<AxiosResponse<IAuthUser>> {
-    return $api.get<IAuthUser>("/user/");
+    return $api.get<IAuthUser>("/auth/me/");
   }
   static async fetchUserData(): Promise<AxiosResponse<IUserData>> {
-    return $api.get<IUserData>("/user/");
+    return $api.get<IUserData>("/auth/me/");
   }
   static async changePassword(
     data: IChangePasswordProps

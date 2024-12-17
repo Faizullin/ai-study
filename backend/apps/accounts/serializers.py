@@ -1,9 +1,13 @@
-from apps.academics.models import Course
 from dj_rest_auth.serializers import \
     JWTSerializerWithExpiration as _BaseJWTSerializerWithExpiration
 from dj_rest_auth.serializers import \
     PasswordResetSerializer as _BasePasswordResetSerializer
+from django.contrib.auth import get_user_model
+
+from apps.academics.models import Course
 from utils.serializers import get_datetime_formatted, serializers
+
+UserModel = get_user_model()
 
 
 class JWTSerializerWithExpiration(_BaseJWTSerializerWithExpiration):
@@ -50,3 +54,14 @@ class UserProfileCourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = ('id', 'title', 'subject', 'image')
+
+
+class UserDetailSerializer(serializers.ModelSerializer):
+    roles = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = UserModel
+        fields = ('id', 'username', 'email', 'first_name', 'last_name', "roles")
+
+    def get_roles(self, obj):
+        return obj.groups.values_list('name', flat=True)

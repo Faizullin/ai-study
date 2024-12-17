@@ -67,7 +67,7 @@ class DocumentSuggestionCfListView(ListAPIView):
     def get_queryset(self):
         use_user_subscribed = self.request.query_params.get("subscribed", None)
         user = self.request.user
-        ctype = ContentType.objects.get_for_model(User)
+        ctype = ContentType.objects.get_for_model(UserModel)
         suggestion_queryset = Suggestion.objects.filter(
             train_type=TrainType.COLLABORATIVE, object_id=user.id, content_type=ctype).order_by('-rating_value')[0:50]
         document_ids = suggestion_queryset.values_list(

@@ -1,0 +1,53 @@
+version: '3.8'
+services:
+    web:
+        build:
+            context: ./backend
+            dockerfile: Dockerfile.dev
+        restart: always
+        command: python3 manage.py runserver 0.0.0.0:8000 --settings=backend.settings.local
+        volumes:
+            - ./backend/apps:/app/apps
+            - ./backend/backend:/app/backend
+            - c_static_data:/app/public/static
+            - c_media_data:/app/public/media
+            - c_model_data:/app/mlrec/models_data
+        env_file:
+            - ./.env    
+        ports:
+            - "8000:8000"
+        depends_on:
+            - db
+            - redis
+    celery:
+        build:
+            context: ./backend
+            dockerfile: Dockerfile.dev
+        command: celery -A backend.celery worker -l INFO
+        volumes:
+            - ./backend/apps:/app/apps
+            - ./backend/backend:/app/backend
+            - c_model_data:/app/mlrec/models_data
+        env_file:
+            - ./.env
+        depends_on:
+            - web
+            - redis
+    db:
+        image: postgres:13-alpine
+        restart: always
+        volumes:
+            - c_postgres_data:/var/lib/postgresql/data/
+        env_file:
+            - ./.env
+    redis:
+        restart: unless-stopped
+        image: redis:alpine
+        expose:
+            - 6379
+
+volumes:
+    c_postgres_data:
+    c_static_data:
+    c_media_data:
+    c_model_data:

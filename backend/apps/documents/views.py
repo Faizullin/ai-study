@@ -68,7 +68,7 @@ class DocumentPopularView(APIView):
     def get(self, request):
         queryset = DocumentFilter(
             self.request.GET, queryset=Document.objects.all()).qs
-        documents = queryset.order_by('-rating_avg')[:3]
+        documents = queryset.order_by('-rating_avg').prefetch_related("featured_image")[:3]
         return Response(DocumentListSerializer(documents, many=True, context={'request': request, }).data, status=status.HTTP_200_OK)
 
 

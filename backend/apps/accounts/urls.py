@@ -1,8 +1,9 @@
 from dj_rest_auth.views import (LogoutView,
-                                PasswordResetConfirmView, UserDetailsView)
+                                PasswordResetConfirmView, )
 from django.urls import path
 
-from .views import LoginView, RegisterView, VerifyEmailView, TokenRefreshView, PasswordResetView, UserProfileCourseListView
+from .views import LoginView, RegisterView, VerifyEmailView, TokenRefreshView, PasswordResetView, \
+    UserProfileCourseListView, UserDetailsView
 
 app_name = 'accounts'
 
